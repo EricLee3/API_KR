@@ -1,0 +1,112 @@
+2015-08-31 14:17:57,656 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()
+2015-08-31 14:18:03,691 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:18:03,931 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.GetVendorList()
+2015-08-31 14:19:23,196 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:19:24,433 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:19:25,740 [DEBUG] [nohup ] - vendorList[3]
+2015-08-31 14:19:31,812 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:19:31,812 [DEBUG] [nohup ] - sell_code[ASPB]
+2015-08-31 14:19:31,812 [DEBUG] [nohup ] - redis key [95:ASPB:order:store:reject:C2S]
+2015-08-31 14:19:35,866 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:19:38,172 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:19:38,251 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:19:40,908 [DEBUG] [nohup ] - org_code[45]
+2015-08-31 14:19:41,086 [DEBUG] [nohup ] - sell_code[REDM]
+2015-08-31 14:19:41,237 [DEBUG] [nohup ] - redis key [45:REDM:order:store:reject:C2S]
+2015-08-31 14:20:05,823 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()SQL EXCEPTION 발생 
+2015-08-31 14:20:07,532 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:21:23,330 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()
+2015-08-31 14:21:25,526 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:21:26,896 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.GetVendorList()
+2015-08-31 14:21:28,978 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:21:29,988 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:21:30,523 [DEBUG] [nohup ] - vendorList[3]
+2015-08-31 14:21:31,124 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:21:31,124 [DEBUG] [nohup ] - sell_code[ASPB]
+2015-08-31 14:21:31,124 [DEBUG] [nohup ] - redis key [95:ASPB:order:store:reject:C2S]
+2015-08-31 14:21:32,268 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:21:32,269 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:21:32,329 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:21:32,491 [DEBUG] [nohup ] - org_code[45]
+2015-08-31 14:21:32,491 [DEBUG] [nohup ] - sell_code[REDM]
+2015-08-31 14:21:32,492 [DEBUG] [nohup ] - redis key [45:REDM:order:store:reject:C2S]
+2015-08-31 14:21:32,527 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()SQL EXCEPTION 발생 
+2015-08-31 14:21:32,531 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:23:58,007 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()
+2015-08-31 14:23:58,233 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:23:58,237 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.GetVendorList()
+2015-08-31 14:23:58,309 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:23:58,423 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:23:58,429 [DEBUG] [nohup ] - vendorList[3]
+2015-08-31 14:23:58,429 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:23:58,429 [DEBUG] [nohup ] - sell_code[ASPB]
+2015-08-31 14:23:58,429 [DEBUG] [nohup ] - redis key [95:ASPB:order:store:reject:C2S]
+2015-08-31 14:23:58,452 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:23:58,452 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:23:58,476 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:23:58,476 [DEBUG] [nohup ] - org_code[45]
+2015-08-31 14:23:58,476 [DEBUG] [nohup ] - sell_code[REDM]
+2015-08-31 14:23:58,476 [DEBUG] [nohup ] - redis key [45:REDM:order:store:reject:C2S]
+2015-08-31 14:23:58,483 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()SQL EXCEPTION 발생 
+2015-08-31 14:23:58,487 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:26:44,936 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()
+2015-08-31 14:26:45,254 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:26:45,258 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.GetVendorList()
+2015-08-31 14:26:45,413 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:26:45,601 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:26:45,624 [DEBUG] [nohup ] - vendorList[3]
+2015-08-31 14:26:45,624 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:26:45,624 [DEBUG] [nohup ] - sell_code[ASPB]
+2015-08-31 14:26:45,624 [DEBUG] [nohup ] - redis key [95:ASPB:order:store:reject:C2S]
+2015-08-31 14:26:45,683 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:26:45,683 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:26:45,706 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:26:45,707 [DEBUG] [nohup ] - org_code[45]
+2015-08-31 14:26:45,707 [DEBUG] [nohup ] - sell_code[REDM]
+2015-08-31 14:26:45,707 [DEBUG] [nohup ] - redis key [45:REDM:order:store:reject:C2S]
+2015-08-31 14:26:45,713 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()SQL EXCEPTION 발생 
+2015-08-31 14:26:45,730 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:32:09,574 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()
+2015-08-31 14:32:11,892 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:32:12,471 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.GetVendorList()
+2015-08-31 14:32:13,522 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:32:14,624 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:32:15,285 [DEBUG] [nohup ] - vendorList[3]
+2015-08-31 14:32:17,596 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:32:17,596 [DEBUG] [nohup ] - sell_code[ASPB]
+2015-08-31 14:32:17,596 [DEBUG] [nohup ] - redis key [95:ASPB:order:store:reject:C2S]
+2015-08-31 14:32:23,823 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:32:23,824 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:32:23,892 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:32:28,285 [DEBUG] [nohup ] - org_code[45]
+2015-08-31 14:32:28,527 [DEBUG] [nohup ] - sell_code[REDM]
+2015-08-31 14:32:28,861 [DEBUG] [nohup ] - redis key [45:REDM:order:store:reject:C2S]
+2015-08-31 14:32:47,092 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:32:47,092 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:32:47,096 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:32:50,356 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:32:50,356 [DEBUG] [nohup ] - sell_code[SDRY]
+2015-08-31 14:32:50,356 [DEBUG] [nohup ] - redis key [95:SDRY:order:store:reject:C2S]
+2015-08-31 14:32:54,141 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:32:54,989 [DEBUG] [nohup ] - 1. Redis connection 생성 시작
+2015-08-31 14:32:56,669 [DEBUG] [nohup ] - 1. Redis connection 생성 끝
+2015-08-31 14:32:59,982 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:38:47,499 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.api_Auto_StoreReject()
+2015-08-31 14:38:49,122 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:38:49,837 [DEBUG] [nohup ] - com.service.ScApiCreateREDIS.GetVendorList()
+2015-08-31 14:38:52,248 [DEBUG] [nohup ] - DB Connect : iseccube Driver
+2015-08-31 14:38:54,229 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
+2015-08-31 14:38:57,726 [DEBUG] [nohup ] - vendorList[3]
+2015-08-31 14:38:59,592 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:38:59,796 [DEBUG] [nohup ] - sell_code[ASPB]
+2015-08-31 14:38:59,957 [DEBUG] [nohup ] - redis key [95:ASPB:order:store:reject:C2S]
+2015-08-31 14:39:15,709 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:39:20,477 [DEBUG] [nohup ] - org_code[45]
+2015-08-31 14:39:20,644 [DEBUG] [nohup ] - sell_code[REDM]
+2015-08-31 14:39:20,829 [DEBUG] [nohup ] - redis key [45:REDM:order:store:reject:C2S]
+2015-08-31 14:39:30,797 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:39:31,291 [DEBUG] [nohup ] - org_code[95]
+2015-08-31 14:39:31,292 [DEBUG] [nohup ] - sell_code[SDRY]
+2015-08-31 14:39:31,292 [DEBUG] [nohup ] - redis key [95:SDRY:order:store:reject:C2S]
+2015-08-31 14:39:32,140 [DEBUG] [nohup ] - redis data: {}
+2015-08-31 14:39:32,308 [DEBUG] [nohup ] - DB Connect out : iseccube Driver
