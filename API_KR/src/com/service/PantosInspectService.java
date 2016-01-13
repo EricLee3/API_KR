@@ -119,6 +119,27 @@ public class PantosInspectService {
 		return sbRespBody.toString();
 	}
 	
+	public static void main(String args[]){
+		
+		PantosInspectService service = new PantosInspectService();
+		
+		String jsonValue = "{\"header\":{\"bizPtrId\":\"isecommerce\",\"bizPtrPw\":\"isecommerceKey\",\"callId\":\"proc0002\",\"ifCd\":\"ISECOMMERCE2\",\"encType\":\"UTF-8\",\"token\":\"\"},\"body\":[{\"coNo\":\"A141012015100700113\",\"boxQty\":\"0\",\"hblNo\":\"\",\"cneeNm\":\"ASOS\",\"cneeNm1\":\"\",\"cneeNm2\":\"\",\"cneeAddr1\":\"ASOS, BARLBY ROAD, SELBY, YO8 5BL, UK\",\"cneeAddr2\":\"\",\"cneeAddr3\":\"SELBY\",\"cneeAddr4\":\"\",\"cneeZipcd\":\"YO85BL\",\"cneeNatnCd\":\"GB\",\"cneeTelNo\":\"+44(0)20 7756 1001\",\"cneeEmailAddr\":\".\",\"polCd\":\"KRICN\",\"podCd\":\"GBLON\",\"itemCd\":\"CLOTHES\",\"itemNm\":\"ASOS Denim Split Front Midi Pencil Skirt in Midwash Blue - Blue / UK 4\",\"orgnNatnCd\":\"KR\",\"untprc\":\"2\",\"curCd\":\"GBP\",\"itemQty\":\"1\",\"hsCd\":\"6211490000\",\"homepageAddr\":\"\",\"wthLen\":\"10\",\"vertLen\":\"10\",\"hgt\":\"10\",\"wgt\":\"2\",\"wgtUnitCd\":\"1\",\"rmk\":\"\",\"etcNm1\":\"\",\"frgttermCd\":\"P\",\"carrCd\":\"\",\"expsSvcTypeCd\":\"\"},{\"coNo\":\"A141012015100700113\",\"boxQty\":\"0\",\"hblNo\":\"\",\"cneeNm\":\"ASOS\",\"cneeNm1\":\"\",\"cneeNm2\":\"\",\"cneeAddr1\":\"ASOS, BARLBY ROAD, SELBY, YO8 5BL, UK\",\"cneeAddr2\":\"\",\"cneeAddr3\":\"SELBY\",\"cneeAddr4\":\"\",\"cneeZipcd\":\"YO85BL\",\"cneeNatnCd\":\"GB\",\"cneeTelNo\":\"+44(0)20 7756 1001\",\"cneeEmailAddr\":\".\",\"polCd\":\"KRICN\",\"podCd\":\"GBLON\",\"itemCd\":\"CLOTHES\",\"itemNm\":\"bcbgmaxazria Asymmetrical Midi Dress in Lace\",\"orgnNatnCd\":\"KR\",\"untprc\":\"10\",\"curCd\":\"GBP\",\"itemQty\":\"1\",\"hsCd\":\"6211490000\",\"homepageAddr\":\"\",\"wthLen\":\"10\",\"vertLen\":\"10\",\"hgt\":\"10\",\"wgt\":\"2\",\"wgtUnitCd\":\"1\",\"rmk\":\"\",\"etcNm1\":\"\",\"frgttermCd\":\"P\",\"carrCd\":\"\",\"expsSvcTypeCd\":\"\"},{\"coNo\":\"A141012015100700113\",\"boxQty\":\"1\",\"hblNo\":\"\",\"cneeNm\":\"ASOS\",\"cneeNm1\":\"\",\"cneeNm2\":\"\",\"cneeAddr1\":\"ASOS, BARLBY ROAD, SELBY, YO8 5BL, UK\",\"cneeAddr2\":\"\",\"cneeAddr3\":\"SELBY\",\"cneeAddr4\":\"\",\"cneeZipcd\":\"YO85BL\",\"cneeNatnCd\":\"GB\",\"cneeTelNo\":\"+44(0)20 7756 1001\",\"cneeEmailAddr\":\".\",\"polCd\":\"KRICN\",\"podCd\":\"GBLON\",\"itemCd\":\"CLOTHES\",\"itemNm\":\"asos mac with raglan sleeve in midi length\",\"orgnNatnCd\":\"KR\",\"untprc\":\"3\",\"curCd\":\"GBP\",\"itemQty\":\"1\",\"hsCd\":\"6211490000\",\"homepageAddr\":\"\",\"wthLen\":\"10\",\"vertLen\":\"10\",\"hgt\":\"10\",\"wgt\":\"2\",\"wgtUnitCd\":\"1\",\"rmk\":\"\",\"etcNm1\":\"\",\"frgttermCd\":\"P\",\"carrCd\":\"\",\"expsSvcTypeCd\":\"\"}]}";
+		
+		try {
+			String re = service.sendJSON("http://totPrd.pantos.com/gsi/cm/interface/callIseCommerceAgent.ext", jsonValue).toString();
+			System.out.println("result" + re);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+			
+			e.printStackTrace();
+			
+			
+		}
+		
+	}
+	
 	public JSONObject sendJSON(String url, String value) throws Exception {
 		
 		httpClient = new DefaultHttpClient();
@@ -127,6 +148,9 @@ public class PantosInspectService {
 		
 		Logger.debug("url: "+ url);
 		System.out.println("url: "+url);
+		
+		//Logger.debug("##############sendJson#############: "+ value);
+		
 		HttpPost request = new HttpPost(url);
 		HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 30000);
 
@@ -150,8 +174,8 @@ public class PantosInspectService {
 		}
 		arrayOutputStream.flush();
 		arrayOutputStream.close();
-		
-		Logger.debug("DECODE PANTOS RESP JSON :" +new String(KisaSeedUtils.dec(arrayOutputStream.toByteArray(), "utf-8", "sUxsPvbH7q66fRUGK87Hpg==")));
+		System.out.println("data1:"  + arrayOutputStream.toByteArray());
+		//Logger.debug("DECODE PANTOS RESP JSON :" +new String(KisaSeedUtils.dec(arrayOutputStream.toByteArray(), "utf-8", "sUxsPvbH7q66fRUGK87Hpg==")));
 		//Logger.debug("DECODE PANTOS RESP JSON :" +new String(arrayOutputStream.toByteArray()));
 		//System.out.println("DECODE PANTOS RESP JSON :" +new String(arrayOutputStream.toByteArray()));
 		

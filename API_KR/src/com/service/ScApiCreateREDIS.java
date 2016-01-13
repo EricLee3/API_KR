@@ -65,10 +65,10 @@ public class ScApiCreateREDIS {
 	private static String  ORDER_STORE_REJECT	= ":order:store:reject:C2S"; // 매장출고거부 수신( CUBE -> SC)
 
 	/* REDIS DB IP 운영서버 */   	
-//	private static String  RED_IP	= "220.117.243.18";
+	private static String  RED_IP	= "220.117.243.18";
 	
 	/* REDIS DB IP 테스트서버 */
-	private static String  RED_IP 	= "1.214.91.21";
+//	private static String  RED_IP 	= "1.214.91.21";
 	/*망내 테스트*/
 //	private static String  RED_IP 	= "192.168.10.66";
 	
@@ -4032,7 +4032,7 @@ public class ScApiCreateREDIS {
 		String redisData ="";
 		String resultMessage = "";
 
-		
+		StringBuffer msg = new StringBuffer();
 		try {
 			/* JDBC Connection 변수 선언 */		
 			conn	= DataBaseManager.getConnection(dbmode);
@@ -4110,10 +4110,9 @@ public class ScApiCreateREDIS {
 				
 				ResultSet	headResult = pstmt.executeQuery();
 				
-				
-				JSONObject header = new JSONObject();
 				//헤더 정보 조회
 				while(headResult.next()){
+					JSONObject header = new JSONObject();
 					
 					StringBuffer   	detailBuffer  		= new StringBuffer(500);	// detail
 					
@@ -4209,22 +4208,22 @@ public class ScApiCreateREDIS {
 						CubeService.setSendLog(dbmode, "SCAPI", command, commandNm, sell_code,shipId, "N/A", "N/A", "N/A", "N/A", "000", "SUCCESS","00", transCD);
 					}
 					header.put("list", cell);
-					
+					redisData = header.toString();
+					Logger.debug("redis data: " +redisData);
+					//결과
+					msg.append(redisData);
+				//redis 연결, write
+					if (vendorList != null && !redisData.equals( "{}")) {
+						Logger.debug("1. Redis connection 생성 시작");
+						jedis = new Jedis(RED_IP, PORT , 12000);
+						jedis.connect();
+						//고정 값 : 1
+						jedis.select(DB_INDEX);	
+						jedis.lpush(redisKey, redisData);
+						Logger.debug("1. Redis connection 생성 끝");
+					}
 				}
-				
-				redisData = header.toString();
-				Logger.debug("redis data: " +redisData);
-				resultMessage = "성공적으로 전송했습니다: 전송전문:" + redisData;
-			//redis 연결, write
-				if (vendorList != null && !redisData.equals( "{}")) {
-					Logger.debug("1. Redis connection 생성 시작");
-					jedis = new Jedis(RED_IP, PORT , 12000);
-					jedis.connect();
-					//고정 값 : 1
-					jedis.select(DB_INDEX);	
-					jedis.lpush(redisKey, header.toString());
-					Logger.debug("1. Redis connection 생성 끝");
-				}
+				resultMessage = "성공적으로 전송했습니다: 전송전문:" + msg.toString();
 			}
 	
 		} catch(SQLException e) {

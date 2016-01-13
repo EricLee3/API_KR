@@ -43,7 +43,7 @@ public class ServiceDAO extends ServiceQuery{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String getRecvCallSeq(Connection conn, String transcd) throws Exception {
+	public String getRecvCallSeq(Connection conn, String transcd, String orderDt) throws Exception {
 		
 		String result = "";
 		String sql = "";
@@ -54,6 +54,7 @@ public class ServiceDAO extends ServiceQuery{
 		try {
 			sql = getSql("ServiceDAO.getRecvCallSeq","","",transcd);
 			params = new ArrayList<Object>();	
+			//params.add(orderDt);
 			
 			rsh = new MapHandler();
 			map = (Map<Object, String>)ExecQuery.query(conn, sql, params, rsh);		

@@ -668,7 +668,6 @@ public class CubeService {
 							list.add(map);
 						}
 					}
-					
 				
 					call_seq = setRecvLog(dbmode, inuser, call_api, getApiName(call_api), vendor_id, sta_dt, end_dt, error_code, message, transcd);
 					
@@ -1184,9 +1183,8 @@ public class CubeService {
 
 			conn = DataBaseManager.getConnection(dbmode);
 			dao = new ServiceDAO();
-
-			
-			call_seq = dao.getRecvCallSeq(conn,transcd);  //로그 차수
+			//날짜 파라미터로 추가 :by lee
+			call_seq = dao.getRecvCallSeq(conn,transcd ,StringUtil.substring(sta_dt, 0, 8) );  //로그 차수
 			
 			ServiceLogInfo rlog = new ServiceLogInfo();
 			

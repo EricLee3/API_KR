@@ -21,6 +21,8 @@
 	//큐브 구분코드 ( 10:wizwid, 20:wconcept, 30:mangoKR , 40:Sterling )
 	
 	String resultMessage = null;
+	//거부용
+	String resultMessage2 = "";
 
 	
 	if (dbmode.equals("") || dbmode == null) {		
@@ -58,8 +60,10 @@
 		} else if (command.equals("DeliveryInsert")) {
 			/*매장 거부: 출고확정 정보전송 전 매장 거부에 대한 정보가 넘어가 함 20150904 
 			api_Auto_StoreReject 의 REDIS KEY 도 화정 정보 송신 키로 수정함 
+			command 가 매장거부일 겨우 StoreCancel 이여야 함
 			BY LEE */
-			resultMessage = redisDAO.api_Auto_StoreReject(dbmode,command,transCD);
+			String command_storeReject = "StoreCancel";
+			resultMessage2 = redisDAO.api_Auto_StoreReject(dbmode,command_storeReject,transCD);
 			resultMessage = redisDAO.api_Delivery_Send(dbmode,command,transCD);
 		} else if (command.equals("ReturnPickUpInsert")) {
 		
@@ -98,4 +102,4 @@
 	}
 	
 %>
-<%=resultMessage%>
+<%= resultMessage2 + resultMessage%>

@@ -694,6 +694,7 @@ public class ServiceQuery {
 		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(CALL_SEQ), 0)) + 1, '0000')) as CALL_SEQ ");
 		qry.append("   FROM API_RECV_LOG															 ");
 		qry.append("  WHERE CALL_DT = TO_CHAR(SYSDATE,'YYYYMMDD') 						 			 ");
+		//qry.append("  WHERE CALL_DT = ?						 			 ");
 		
 		
 		return qry.toString();
