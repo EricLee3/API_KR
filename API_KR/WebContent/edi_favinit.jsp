@@ -20,7 +20,7 @@
 	String dbmode = StringUtil.nullTo(request.getParameter("dbmode"),"");
 	String inuser = StringUtil.nullTo(request.getParameter("inuser"),"SYSTEM");
 	
-	String transCD = "20";	//큐브 구분코드 (10:wizwid, 20:wck, 30:mangoKR)
+	String transCD = "50";	//큐브 구분코드 (10:wizwid, 20:wck, 30:mangoKR, 50:favinit)
 	String Connip = ""; 	//w컨셉 ip
 
 	Connip = "http://prs.favinit.com";		//리얼
