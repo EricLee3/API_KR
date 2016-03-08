@@ -65,12 +65,13 @@ public class ScApiCreateREDIS {
 	private static String  ORDER_STORE_REJECT	= ":order:store:reject:C2S"; // 매장출고거부 수신( CUBE -> SC)
 
 	/* REDIS DB IP 운영서버 */   	
-	private static String  RED_IP	= "220.117.243.18";
+	//private static String  RED_IP	= "220.117.243.18";
 	
 	/* REDIS DB IP 테스트서버 */
 //	private static String  RED_IP 	= "1.214.91.21";
+
 	/*망내 테스트*/
-//	private static String  RED_IP 	= "192.168.10.66";
+	private static String  RED_IP 	= "192.168.10.66";
 	
 	
 	
@@ -125,7 +126,9 @@ public class ScApiCreateREDIS {
 		StringBuffer   	sqlBuffer  	= new StringBuffer(500);	//쿼리문
 		StringBuffer   	sqlBuffer2  = new StringBuffer(500);	//카운트 쿼리문
 		
-		HashMap hm 			= new HashMap();
+		// should do this to evade warning [IOS 22-Jan-16]
+		//HashMap<String, String> hm = new HashMap<String, String>();
+		HashMap hm = new HashMap();
 		List	vendorList 	= new ArrayList();
 		
 		int cnt 	= 0;
@@ -1450,6 +1453,7 @@ public class ScApiCreateREDIS {
 						String rtVendorNm		= "";		
 						//추가 20150828 BY LEE : 매장 직출 기능 추가에 따른 추가
 						String rtNodeType		= ""; 
+						String strVendor_Pono	= "";		// inserted for PONO [IOS 26-Jan-26]
 						
 						for (int v = 0; v < redisCnt; v++) {
 
@@ -1484,6 +1488,9 @@ public class ScApiCreateREDIS {
 							if(status.equals(RECV_ORDER_STATUS)){	/* 출고의뢰일때 사용하는 항목 */								
 								Logger.debug("vendor_id["+StringUtil.nullTo((String) jobj.get("vendor_id"),"")+"]");
 								rtVendorNm  = StringUtil.nullTo((String) jobj.get("vendor_id"),"");
+								
+								// inserted for Vendor PONO [IOS 26-Jan-16]
+								strVendor_Pono = StringUtil.nullTo((String) jobj.get("channelOrderNo"), "");
 							}
 							
 							Logger.debug("처리상태["+status+"]");
@@ -1633,6 +1640,7 @@ public class ScApiCreateREDIS {
 									dInfo.setVendorNm(rtVendorNm);
 									//2015.08.31  by lee
 									dInfo.setNodeType(rtNodeType);
+									dInfo.setVendor_Pono(strVendor_Pono);	// inserted [IOS 26-Jan-16]
 									
 									/* 2-1. API_RECV_DATA INSERT 요청 시작 */
 									Logger.debug("2-1. API_RECV_DATA INSERT 요청 시작");

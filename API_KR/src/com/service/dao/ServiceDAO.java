@@ -344,6 +344,8 @@ public class ServiceDAO extends ServiceQuery{
 			params.add(dataInfo.getVendorNm());
 			//2015.08.30 by lee
 			params.add(dataInfo.getNodeType());
+			// inserted [IOS 26-Jan-26]
+			params.add(dataInfo.getVendor_Pono());
 			
 			result = ExecQuery.update(conn, sql, params);
 		} catch (Exception e) {

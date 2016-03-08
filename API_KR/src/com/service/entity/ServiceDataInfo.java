@@ -77,8 +77,17 @@ public class ServiceDataInfo{
 	String item_status          = null;    //상품등급     추가(2015.02.25 하윤식)
 	String orderLineNo_org      = null;    //원주문순번   추가(2015.02.25 하윤식)
     String orderReleaseKey_org  = null;    //원주문확정키 추가(2015.02.25 하윤식)
-    String nodeType				= null;	   // 
+    String nodeType				= null;	   //
+    String strVendor_Pono		= null;	   //벤더번호 추가 [IOS 26-Jan-16] 
 		
+    public String getVendor_Pono()  {
+    	return strVendor_Pono;
+    }
+    
+    public void setVendor_Pono(String V_Pono)  {
+    	this.strVendor_Pono = V_Pono;
+    }
+    
 	public String getNodeType() {
 		return nodeType;
 	}

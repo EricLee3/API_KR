@@ -349,7 +349,9 @@ public class ServiceQuery {
 		qry.append("   AND B.CD4   = '"+ transcd +"'                                                                                                "); 
 		qry.append("   AND A.CBGU  = '1'                                                                                                            "); 
 		qry.append("   AND A.GUBUN = '1'                                                                                                            "); 
-		qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                         "); 
+		qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                         ");
+// [IOS 16-FEB-16] 큐브 요청에 의거 -20일로 변경했었음, 원 코드는 -7
+//		qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -20, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                         ");
 		qry.append("   AND A.PODT >= DECODE('"+ transcd +"', '20', '20131203', '20120404')                                                          "); 
 		qry.append("   AND A.POSEQ < 90001                                                                                                          "); 
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                    "); 
@@ -574,6 +576,7 @@ public class ServiceQuery {
 	
 	/*
 	 * 2015.08.31 STORE_GB 추가 by lee
+	 * VENDOR_PONO 추가 [IOS 26-JAN-16]
 	 * */
 	public String setRecvData(String transcd) {
 		StringBuffer qry = new StringBuffer();
@@ -588,7 +591,7 @@ public class ServiceQuery {
 		qry.append("        OPTION2, SALE_PRICE, DELI_PRICE, QTY, DELI_GB, ERROR_CODE,           	"); 
 		qry.append("        ERROR_MSG, INUSER, INTIME, ORI_SHIP_ID , RET_CODE, TRANS_STATUS,	 	");
 		qry.append("        CUST_EMAIL, CLAME_MEMO, CUBE_ITEM , COCD , WHCD	, ORDER_KEY, 			");
-		qry.append("        ORDERSEQ_KEY, SHIP_KEY, VENDOR_NM , STORE_GB 				 						");
+		qry.append("        ORDERSEQ_KEY, SHIP_KEY, VENDOR_NM , STORE_GB , VENDOR_PONO				");
 		qry.append("             )                                                               	"); 
 		qry.append("      VALUES ( ?, ?, ?, ?, ?, ?,            						         	"); 
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
@@ -599,7 +602,7 @@ public class ServiceQuery {
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
 		qry.append("              ?, ?, to_char(sysdate, 'YYYYMMDDHH24MISS'), ?, ?, '"+transcd+"',	");
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	");
-		qry.append("              ?, ?, ?, ?	  					                                    ");
+		qry.append("              ?, ?, ?, ?, ?					                                    ");
 		qry.append("             )                                                               	"); 
 		
 		return qry.toString();

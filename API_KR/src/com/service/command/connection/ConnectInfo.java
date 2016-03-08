@@ -64,6 +64,13 @@ public class ConnectInfo {
 		//dbConnect = "jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8";
 		//dbAccount = "iseccube";
 		//dbPassword = "iseccube1234";
+		
+		// test ISECCube	// [IOS 21-JAN-16]
+		dbConnect = "jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8";
+		dbAccount = "iseccube";
+		dbPassword = "iseccube1234";
+
 		maxActive = 100;
+		
 	}
 }
