@@ -461,7 +461,7 @@ public class CubeService {
 					
 					if (transcd.equals("10")) {			//WIZWID URL
 						server.append("http://"+connip+"/API/handler/wizwid/kr/APIService-"+call_api);
-					} else if (transcd.equals("20")) {	//WCONCEPT URL
+					} else if (transcd.equals("20") || transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 						server.append(connip+"/Cube/"+call_api+".asp");	//w컨셉 url
 					}
 					
