@@ -513,7 +513,7 @@ public class CubeService {
 					
 					if (transcd.equals("10")) {			//WIZWID URL
 						Logger.debug("[server]"+"http://"+connip+"/API/handler/wizwid/kr/APIService-"+call_api+server.toString());
-					} else if (transcd.equals("20")) {	//WCONCEPT URL
+					} else if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 						Logger.debug("[server]"+connip+"/Cube/"+call_api+".asp"+server.toString());	//w컨셉 url
 					}
 					
@@ -605,7 +605,7 @@ public class CubeService {
 					
 					if (transcd.equals("10")) {			//WIZWID URL
 						server = "http://"+connip+"/API/handler/wizwid/kr/APIService-"+call_api+"?VENDOR_ID="+vendor_id+"&STA_DT="+sta_dt+"&END_DT="+end_dt; // xmlURL
-					} else if (transcd.equals("20")) {	//WCONCEPT URL
+					} else if (transcd.equals("20") || transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 						server = connip+"/Cube/"+call_api+".asp?VENDOR_ID="+vendor_id+"&STA_DT="+sta_dt+"&END_DT="+end_dt;	//w컨셉 url
 					}
 					Logger.debug("vendor_id: "+vendor_id);
@@ -874,7 +874,7 @@ public class CubeService {
 				DataBaseManager.prepareCall(conn, "{call P_RECV_INORDER('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				Logger.debug("주문 연동 끝");
 				
-				if (transcd.equals("20")) {	//WCONCEPT 인 경우..
+				if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 					//발주조회 등록 후 주문완료 정보 전송
 					sendOrderAfterCheck(dbmode, "OrderRetrieveCheck", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
 				}
@@ -889,7 +889,7 @@ public class CubeService {
 				//반품정보조회
 				DataBaseManager.prepareCall(conn, "{call P_RECV_REFUND('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				
-				if (transcd.equals("20")) {	//WCONCEPT 인 경우..
+				if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 					//반품정보조회 후 반품 정보 전송
 					sendOrderAfterCheck(dbmode, "OrderReturnRetrieveCheck", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
 				}
@@ -979,7 +979,7 @@ public class CubeService {
 				DataBaseManager.prepareCall(conn, "{call P_RECV_INORDER('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				Logger.debug("주문 연동 끝");
 				
-				if (transcd.equals("20")) {	//WCONCEPT 인 경우..
+				if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 					//발주조회 등록 후 주문완료 정보 전송
 					sendOrderAfterCheck(dbmode, "OrderRetrieveCheck", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
 				}
@@ -994,7 +994,7 @@ public class CubeService {
 				//반품정보조회
 				DataBaseManager.prepareCall(conn, "{call P_RECV_REFUND('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				
-				if (transcd.equals("20")) {	//WCONCEPT 인 경우..
+				if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 					//반품정보조회 후 반품 정보 전송
 					sendOrderAfterCheck(dbmode, "OrderReturnRetrieveCheck", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
 				}
@@ -1546,7 +1546,7 @@ public class CubeService {
 		String bl_no 			= ""; 	//운송장번호
 		String cancel_code 		= "";	//주문취소사유
 		
-		if (transcd.equals("20")) {
+		if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 			inuser = "BATCH";
 		} else if (transcd.equals("40")) {
 			inuser = "CMAPI";
@@ -1564,11 +1564,11 @@ public class CubeService {
 				for (int v = 0; v < getOrderSendData.size(); v++) {
 					vMap = (HashMap<String, String>) getOrderSendData.get(v);
 					
-					if (transcd.equals("20")) {		//WCONCEPT
+					if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 					
 						server = new StringBuffer();
 						
-						if (transcd.equals("20")) {	//WCONCEPT URL
+						if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 							server.append(connip+"/Cube/"+call_api+".asp");	//w컨셉 url
 						}
 						
@@ -1586,7 +1586,7 @@ public class CubeService {
 						}
 						
 						
-						if (transcd.equals("20")) {	//WCONCEPT URL
+						if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 							Logger.debug("[server]"+connip+"/Cube/"+call_api+".asp"+server.toString());	//w컨셉 url
 						}
 						
