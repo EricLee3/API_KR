@@ -153,7 +153,7 @@ public class StringUtil {
 	public static String nullTo(String source, String replace)
 	{
 		try {
-			if(source == null || source.equals(""))
+			if(source == null || source.equals("") || source.equals("null"))
 			{
 				return replace;
 			}

@@ -1390,7 +1390,7 @@ public class CubeService {
 			slog.setCall_seq(call_seq);
 			slog.setCall_api(call_api);
 			//slog.setShip_id(ship_id);
-			slog.setShip_id(dInfo.getShipKey()); //20150306 하윤식 추가
+			slog.setShip_id(dInfo.getShip_id()); // [IOS 2016. 4. 27.]
 			slog.setApply_dt(apply_dt);
 			slog.setApply_time(apply_time);
 			slog.setDeli_company_id(deli_company_id);
