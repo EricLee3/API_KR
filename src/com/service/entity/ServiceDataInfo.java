@@ -80,6 +80,7 @@ public class ServiceDataInfo{
     String nodeType				= null;	   //
     String strVendor_Pono		= null;	   //벤더번호 추가 [IOS 26-Jan-16] 
 		
+    
     public String getVendor_Pono()  {
     	return strVendor_Pono;
     }

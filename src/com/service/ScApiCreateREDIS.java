@@ -40,7 +40,7 @@ import com.service.entity.StoreRejectDataInfo;
 public class ScApiCreateREDIS {
 	
 	private static ScApiCreateREDIS instance = new ScApiCreateREDIS();
-	
+	  
 	/* 연동 REDIS KEY */
 	private static String  SEND_PRODUCT_KEY 	= ":product:C2M"; 		// 상품 정보 송신
 	private static String  RECV_PRODUCT_KEY 	= ":product:M2C"; 		// 상품 등록/수정 결과수신
@@ -323,6 +323,7 @@ public class ScApiCreateREDIS {
 			sqlBuffer3.append("          FROM TBP050_TRANSFER   				\n");			
 			sqlBuffer3.append("          WHERE STATUS  IN ('00', '99')   		\n");	
 			sqlBuffer3.append("          AND COCD 		= ?  					\n");	
+			sqlBuffer3.append("          AND TRAN_DATE >= TO_CHAR(SYSDATE - 7, 'YYYYMMDD') 	\n");	
 			sqlBuffer3.append("          AND SHOP_ID 	= ?  					\n");			
 			sqlBuffer3.append("          GROUP BY BAR_CODE ) B  				\n");			
 			sqlBuffer3.append("  WHERE A.TRAN_DATE = B.TRAN_DATE 				\n");
@@ -4342,6 +4343,7 @@ public class ScApiCreateREDIS {
 				headerBuffer.append("    AND A.IMPCD = 'N'																						");
 				headerBuffer.append("    AND A.CD1  <> 'API취소'																					");
 				headerBuffer.append("    AND SUBSTR(A.UPDTIME, 1,8) BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')	");
+				headerBuffer.append("    AND A.PODT >= TO_CHAR(SYSDATE -15, 'YYYYMMDD')															");
 				headerBuffer.append("    AND A.CBGU  = ?																						");
 				headerBuffer.append("    AND A.PONO  LIKE ?																						");
 				headerBuffer.append("    AND B.CD4   = ?																						");
@@ -4352,6 +4354,7 @@ public class ScApiCreateREDIS {
 				headerBuffer.append("                      WHERE B.REFCD = C.VENDOR_ID															");
 				headerBuffer.append("                        AND SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID							");
 				headerBuffer.append("                        AND C.RESULT_CODE = '000'															");
+				headerBuffer.append("              			 AND C.CALL_DT 	  >= to_char(sysdate-10,'YYYYMMDD')                                 ");
 				headerBuffer.append("                        AND C.CALL_API    = ?																");
 				headerBuffer.append("                    )																						");
 				

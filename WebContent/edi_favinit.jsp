@@ -24,7 +24,7 @@
 	String Connip = ""; 	//w컨셉 ip
 
 	Connip = "http://prs.favinit.com";		//리얼
-	//Connip = "http://testprs.wconcept.co.kr";	//테스트
+	//Connip = "http://testprs.favinit.com";	//테스트
 	
 	if (dbmode.equals("") || dbmode == null) {
 		out.print("DB명이 올바르지않습니다.");

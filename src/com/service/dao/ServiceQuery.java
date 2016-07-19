@@ -314,11 +314,12 @@ public class ServiceQuery {
 		qry.append("   AND A.CBGU     = '1'                                                                     ");
 		qry.append("   AND A.GUBUN    = '1'                                                                     ");
 		qry.append("   AND A.REDT BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')      ");
-		qry.append("   AND A.PODT    >= '20120404'                                                              ");
+		qry.append("   AND A.PODT    >= TO_CHAR(SYSDATE -50, 'YYYYMMDD')                                        ");
 		qry.append("   AND A.POSEQ    < 90001                                                                   ");
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                ");
 		qry.append("                      FROM API_SEND_LOG C                                                   ");
 		qry.append("                     WHERE SUBSTR(A.TEMPNO, 1,LENGTH(A.TEMPNO) -3) = C.SHIP_ID              ");
+		qry.append("                       AND C.CALL_DT >= TO_CHAR(SYSDATE -10, 'YYYYMMDD')	                ");
 		qry.append("                       AND C.RESULT_CODE = '000'                                            ");
 		qry.append("                       AND C.CALL_API    = 'OrderConfirm'                                   ");
 		qry.append("                  )                                                                         ");
@@ -350,15 +351,14 @@ public class ServiceQuery {
 		qry.append("   AND A.CBGU  = '1'                                                                                                            "); 
 		qry.append("   AND A.GUBUN = '1'                                                                                                            "); 
 		qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                         ");
-// [IOS 16-FEB-16] 큐브 요청에 의거 -20일로 변경했었음, 원 코드는 -7
-//		qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -20, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                         ");
-		qry.append("   AND A.PODT >= DECODE('"+ transcd +"', '20', '20131203', '20120404')                                                          "); 
+		qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -65, 'YYYYMMDD')  						                                                        "); 
 		qry.append("   AND A.POSEQ < 90001                                                                                                          "); 
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                    "); 
 		qry.append("					  FROM API_SEND_LOG C                                                                                       "); 
 		qry.append("					 WHERE B.REFCD       = C.VENDOR_ID                                                                          "); 
 		qry.append("					   AND SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID                                                 "); 
-		qry.append("					   AND C.RESULT_CODE = '000'                                                                                "); 
+		qry.append("					   AND C.RESULT_CODE = '000'                                                                                ");
+		qry.append("					   AND C.CALL_DT	>= TO_CHAR(SYSDATE -10, 'YYYYMMDD')                                                     ");
 		qry.append("					   AND C.CALL_API    = 'DeliveryInsert'                                                                     "); 
 		qry.append("				  )                                                                                                             "); 
 		qry.append("                                                                                                                                ");
@@ -374,10 +374,10 @@ public class ServiceQuery {
 		qry.append("	   B.REFCD                                  AS VENDOR_ID                                                                    ");
 		qry.append("	 , SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) AS TEMPNO                                                                       ");
 		qry.append("	 , SUBSTR(A.PONO, 1, LENGTH(A.PONO) -2) 	AS PONO                                                                        	");
-		qry.append("	 , DECODE(NVL(A.CD1, '3Z'),'단순변심','31','품절','33','3Z') AS CANCEL_CODE                                                 ");
+		qry.append("	 , DECODE(NVL(A.CD1, '3Z'),'단순변심','31','품절','33','3Z') AS CANCEL_CODE                            	                        ");
 		qry.append("	 , TRIM(TO_CHAR(A.POSEQ, '000')) AS ORDER_SEQ                                                                               ");
 		qry.append("	 , SUBSTR(A.UPDTIME, 1,8)  AS CANCEL_DT                                                                                     ");
-		qry.append("	 , NVL(a.CD1,'')  AS  CANCEL_NM                                                                                     ");		
+		qry.append("	 , NVL(a.CD1,'')  AS  CANCEL_NM                                                                   		                    ");		
 		qry.append("  FROM TBD03C A                                                                                                                 ");
 		qry.append("	 , TBB150 B                                                                                                                 ");
 		qry.append(" WHERE A.VDCD  = B.CD1                                                                                                          ");
@@ -385,18 +385,19 @@ public class ServiceQuery {
 		qry.append("   AND A.CBGU  = '1'                                                                                                            ");
 		qry.append("   AND A.GUBUN = '1'                                                                                                            ");
 		qry.append("   AND SUBSTR(A.UPDTIME, 1,8) BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                          ");
-		qry.append("   AND A.PODT >= DECODE('"+ transcd +"', '20', '20131203', '20120404')                                                          ");
+		qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -50, 'YYYYMMDD')				  	                                                            ");
 		qry.append("   AND A.POSEQ < 90001                                                                                                          ");
 		qry.append("   AND A.CD22  = B.REFCD                                                                                                        ");
 		qry.append("   AND A.PONO  LIKE '%-C'                                                                                                       ");
 		qry.append("   AND A.IMPCD = 'N'                                                                                                            ");
-		qry.append("   AND A.CD1  <> 'API취소'                                                                                                      ");
+		qry.append("   AND A.CD1  <> 'API취소'                                                                                                       ");
 		qry.append("   AND B.CD4   = '"+ transcd +"'                                                                                                ");
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                    ");
 		qry.append("					  FROM API_SEND_LOG C                                                                                       ");
 		qry.append("					 WHERE B.REFCD       = C.VENDOR_ID                                                                          ");
 		qry.append("					   AND DECODE('"+ transcd +"', '30', A.TEMPNO, SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3)) = C.SHIP_ID		");
 		qry.append("					   AND C.RESULT_CODE = '000'                                                                                ");
+		qry.append("					   AND C.CALL_DT	>= TO_CHAR(SYSDATE -10, 'YYYYMMDD')                                                     ");
 		qry.append("					   AND C.CALL_API    = 'SoldOutCancel'                                                                      ");
 		qry.append("				  )                                                                                                             ");
 		qry.append("                                                                                                                                ");
@@ -420,12 +421,13 @@ public class ServiceQuery {
 		qry.append("   AND A.CBGU  = '2'                                                                  	");
 		qry.append("   AND A.GUBUN = '1'                                                                  	");
 		qry.append("   AND A.REDT  BETWEEN to_char(sysdate-7,'YYYYMMDD') AND to_char(sysdate,'YYYYMMDD')  	");
-		qry.append("   AND A.PODT >= '20120404'                                                           	");
+		qry.append("   AND A.PODT  >= TO_CHAR(sysdate-15,'YYYYMMDD')                                       	");
 		qry.append("   AND A.POSEQ < 90001                                                                  ");
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                          	");
 		qry.append("                      FROM API_SEND_LOG C                                             	");
 		qry.append("                     WHERE SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID       	");
 		qry.append("                       AND B.REFCD       = C.VENDOR_ID                                	");
+		qry.append("                       AND C.CALL_DT    >= TO_CHAR(sysdate-7,'YYYYMMDD')              	");
 		qry.append("                       AND C.RESULT_CODE = '000'                                      	");
 		qry.append("                       AND CALL_API      = 'OrderReturnConfirm'                       	");
 		qry.append("                  )                                                                   	");	
@@ -455,13 +457,14 @@ public class ServiceQuery {
 		qry.append("   AND A.CBGU  = '2'                                                                                                             ");
 		qry.append("   AND A.GUBUN = '1'                                                                                                             ");
 		qry.append("   AND A.OUTDT BETWEEN to_char(sysdate-7,'YYYYMMDD') AND to_char(sysdate,'YYYYMMDD')                                             ");
-		qry.append("   AND A.PODT >= DECODE('"+ transcd +"', '20', '20131203', '20120404')                                                           ");
+		qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -50, 'YYYYMMDD')                                   					                         ");
 		qry.append("   AND A.POSEQ < 90001                                                                                                           ");
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                     ");
 		qry.append("                      FROM API_SEND_LOG C                                                                                        ");
 		qry.append("                     WHERE SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID                                                  ");
 		qry.append("                       AND B.REFCD       = C.VENDOR_ID                                                                           ");
 		qry.append("                       AND C.RESULT_CODE = '000'                                                                                 ");
+		qry.append("                       AND C.CALL_DT    >= TO_CHAR(SYSDATE -10,'YYYYMMDD')                                                       ");
 		qry.append("                       AND C.CALL_API    = 'ReturnPickUpInsert'                                                                  ");
 		qry.append("                  )                                                                                                              ");
 		
@@ -487,16 +490,17 @@ public class ServiceQuery {
 		qry.append("   AND A.CBGU  = '2'                                                                                                             ");
 		qry.append("   AND A.GUBUN = '1'                                                                                                             ");
 		qry.append("   AND SUBSTR(A.UPDTIME, 1, 8) BETWEEN to_char(sysdate-7,'YYYYMMDD') AND to_char(sysdate,'YYYYMMDD')                             ");
-		qry.append("   AND A.PODT >= DECODE('"+ transcd +"', '20', '20131203', '20120404')                                                           ");
+		qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -50, 'YYYYMMDD')						                                                         ");
 		qry.append("   AND A.POSEQ < 90001                                                                                                           ");
 		qry.append("   AND A.PONO  LIKE '%-D'                                                                                                        ");
 		qry.append("   AND A.IMPCD = 'N'                                                                                                             ");
-		qry.append("   AND A.CD1  <> 'API취소'                                                                                                       ");
+		qry.append("   AND A.CD1  <> 'API취소'                                                                                                        ");
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                     ");
 		qry.append("                      FROM API_SEND_LOG C                                                                                        ");
 		qry.append("                     WHERE SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID                                                  ");
 		qry.append("                       AND B.REFCD       = C.VENDOR_ID                                                                           ");
 		qry.append("                       AND C.RESULT_CODE = '000'                                                                                 ");
+		qry.append("                       AND C.CALL_DT 	>= to_char(sysdate-10,'YYYYMMDD')                                                        ");
 		qry.append("                       AND C.CALL_API    = 'ReturnRefuse'                                                                        ");
 		qry.append("                  )                                                                                                              ");	
 		
@@ -724,7 +728,6 @@ public class ServiceQuery {
 		qry.append("SELECT  A.COCD  					  AS  COCD				                                                                "); 
 		qry.append("	  , B.REFCD                       AS  VENDOR_ID                                                                    		"); 
 		qry.append("	  , A.PONO                        AS  PONO                                               								"); 
-//		qry.append("	  , A.ORDERHEADERKEY              AS  ORDERHEADERKEY                                                          			"); 
 		qry.append("  FROM TBD03C A                                                                                                             "); 
 		qry.append("	 , TBB150 B                                                                                                             "); 
 		qry.append(" WHERE A.VDCD  = B.CD1                                                                                                      "); 
@@ -736,7 +739,7 @@ public class ServiceQuery {
 		qry.append("   AND A.GUBUN = '1'                                                                                                        "); 
 		qry.append("   AND A.COCD   = '"+ cocd +"'                                                                                            	");		
 		qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                     "); 
-		qry.append("   AND A.PODT >= '20141028'                                                     											"); 
+		qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -65, 'YYYYMMDD')                                  											"); 
 		qry.append("   AND A.POSEQ < 90001                                                                                                      "); 
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                "); 
 		qry.append("					  FROM API_SEND_LOG C                                                                                   "); 
@@ -756,11 +759,6 @@ public class ServiceQuery {
 		StringBuffer qry = new StringBuffer();
 		
 		qry.append("SELECT  A.POSEQ  					  AS  ORDER_SEQ			                                                                "); 
-//		qry.append("	  , A.POSEQ 					  AS  ORDER_SEQ                                                                        	"); 
-//		qry.append("	  , A.ORDERLINEKEY                AS  ORDERLINEKEY                                                          			"); 
-//		qry.append("	  , A.ORDERRELEASEKEY        	  AS  ORDERRELEASEKEY																	"); 
-//		qry.append("	  , A.RENO                        AS  RENO                                                                     			");   
-//		qry.append("	  , SUBSTR(A.UPDTIME, 9, 6)       AS  UPDTIME                                                                  			");
 		qry.append("	  , SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3)   AS  ORDERLINEKEY                                                  		");
 		qry.append("	  , A.EXPNO                       AS  EXPNO                                                              				");
 		qry.append("	  , A.EXPNM 					  AS  EXPNM                                                              				"); 
@@ -775,10 +773,10 @@ public class ServiceQuery {
 		qry.append(" AND   A.POYN  = 'Y'                                                                                                 		");  
 		qry.append(" AND NOT EXISTS ( SELECT 1                             		                                                                "); 
 		qry.append("					  FROM API_SEND_LOG C                                                                                   "); 
-		qry.append("					 WHERE A.CD22       = C.VENDOR_ID                                                                      "); 
+		qry.append("					 WHERE A.CD22       = C.VENDOR_ID                                                                       "); 
 		qry.append("					   AND SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID                                             "); 
 		qry.append("					   AND C.CALL_DT >= TO_CHAR(SYSDATE -10, 'YYYYMMDD')                                          			");
-		qry.append("					   AND C.RESULT_CODE = '000'                                                                             "); 
+		qry.append("					   AND C.RESULT_CODE = '000'                                                                            "); 
 		qry.append("					   AND C.CALL_API    = 'DeliveryInsert'                                                                 "); 
 		qry.append("				  )                                                                                                         ");		
 		return qry.toString();
@@ -791,7 +789,6 @@ public class ServiceQuery {
 			qry.append("SELECT  A.COCD  					  AS  COCD				                                                                "); 
 			qry.append("	  , B.REFCD                       AS  VENDOR_ID                                                                    		"); 
 			qry.append("	  , A.PONO                        AS  PONO                                               								"); 
-//			qry.append("	  , A.ORDERHEADERKEY              AS  ORDERHEADERKEY                                                          			"); 
 			qry.append("  FROM TBD03C A                                                                                                             "); 
 			qry.append("	 , TBB150 B                                                                                                             "); 
 			qry.append(" WHERE A.VDCD  = B.CD1                                                                                                      "); 
@@ -803,7 +800,7 @@ public class ServiceQuery {
 			qry.append("   AND A.GUBUN = '1'                                                                                                        "); 
 			qry.append("   AND A.COCD   = '"+ cocd +"'                                                                                            	");		
 			qry.append("   AND A.OUTDT BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')                                     "); 
-			qry.append("   AND A.PODT >= '20141028'                                                     											"); 
+			qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -50, 'YYYYMMDD')                                 											"); 
 			qry.append("   AND A.POSEQ < 90001                                                                                                      "); 
 			qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                "); 
 			qry.append("					  FROM API_SEND_LOG C                                                                                   "); 

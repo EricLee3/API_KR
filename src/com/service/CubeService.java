@@ -609,7 +609,9 @@ public class CubeService {
 						server = connip+"/Cube/"+call_api+".asp?VENDOR_ID="+vendor_id+"&STA_DT="+sta_dt+"&END_DT="+end_dt;	//w컨셉 url
 					}
 					Logger.debug("vendor_id: "+vendor_id);
+
 					document = getDocument(server); 
+
 					if(document == null) {
 						continue;
 					}
@@ -744,7 +746,8 @@ public class CubeService {
 									dInfo.setOrderKey("");
 									dInfo.setOrderSeqKey("");									
 									dInfo.setShipKey("");
-									dInfo.setVendorNm("");
+									dInfo.setVendorNm(StringUtil.nullTo((String)ordMap.get("SHOPNAME"), ""));	// [IOS 2016. 6. 21.] 
+									
 									dao.setRecvData(conn, dInfo, transcd);
 									seq++;
 								}

@@ -250,6 +250,7 @@ public class CubeApiCreateJSON {
 			sqlBuffer3.append("                    , MAX(TRAN_SEQ)  AS TRAN_SEQ              	\n");
 			sqlBuffer3.append("            FROM    TBP050_TRANSFER                           	\n");
 			sqlBuffer3.append("            WHERE   STATUS IN ('00', '99')                    	\n");
+			sqlBuffer3.append("            AND TRAN_DATE >=  TO_CHAR(SYSDATE -5, 'YYYYMMDD')   	\n");
 			sqlBuffer3.append("            GROUP BY BAR_CODE, VENDOR_ID                      	\n");
 			sqlBuffer3.append("        )   B,                                                	\n");
 			sqlBuffer3.append("        (                                                     	\n");
