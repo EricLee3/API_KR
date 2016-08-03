@@ -22,6 +22,7 @@
 	
 	String transCD = "50";	//큐브 구분코드 (10:wizwid, 20:wck, 30:mangoKR, 50:favinit)
 	String Connip = ""; 	//w컨셉 ip
+	String resultMessage = null;
 
 	Connip = "http://prs.favinit.com";		//리얼
 	//Connip = "http://testprs.favinit.com";	//테스트
@@ -29,14 +30,14 @@
 	if (dbmode.equals("") || dbmode == null) {
 		out.print("DB명이 올바르지않습니다.");
 	} else {
-		if (command.equals("SendProductData")) {  // 상품 등록/수정 송신 [IOS 19.Jul.16]
-			cs.getSendProductData(dbmode,inuser, command, Connip, transCD);	
+		if (command.equals("SendProductData")) {  		// 상품 등록/수정 송신 [IOS 19.Jul.16]
+			resultMessage = cs.getSendProductData(dbmode,inuser, command, Connip, transCD);	
 		} else if(command.equals("RecvProductData")) {  // 상품 등록결과 수신 [IOS 19.Jul.16]
-			cs.getRecvProductData(dbmode,inuser, command, Connip, transCD);
-		} else if (command.equals("SendItemStock")) {  // 상품 재고 송신 [IOS 19.Jul.16]
-			cs.getSendItemStock(dbmode,inuser, command, Connip, transCD);		
-		} else if (command.equals("RecvItemStock")) {  // 상품 재고 처리결과 수신 [IOS 19.Jul.16]
-			cs.getRecvItemStock(dbmode,inuser, command, Connip, transCD);
+			resultMessage = cs.getRecvProductData(dbmode,inuser, command, Connip, transCD);
+		} else if (command.equals("SendItemStock")) {  	// 상품 재고 송신 [IOS 19.Jul.16]
+			resultMessage = cs.getSendItemStock(dbmode,inuser, command, Connip, transCD);		
+		} else if (command.equals("RecvItemStock")) {  	// 상품 재고 처리결과 수신 [IOS 19.Jul.16]
+			resultMessage = cs.getRecvItemStock(dbmode,inuser, command, Connip, transCD);
 		} else if (command.equals("OrderRetrieve")) {						//발주조회
 			cs.getOrderRecvData(dbmode, inuser, command, Connip, transCD);  	
 		} else if (command.equals("OrderConfirm")) {				//발주확인
@@ -63,5 +64,6 @@
 	}
 	
 %>
+<%= resultMessage %>	
 </body>
 </html>
