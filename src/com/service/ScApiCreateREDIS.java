@@ -1107,27 +1107,29 @@ public class ScApiCreateREDIS {
 
 			Logger.debug("0. Sterling 재고 수신후 UPDATE SQL 작성 시작");
 			
-			sqlBuffer0.append("SELECT   RETC AS COCD											\n");	
-			sqlBuffer0.append("       , REFCD  AS VENDOR_ID										\n");			
-			sqlBuffer0.append("  FROM TBB150					    							\n");	
-			sqlBuffer0.append(" WHERE REFTP = 'ZY'												\n");	
-			sqlBuffer0.append("   AND REFCD <> '0000'											\n");	
-			sqlBuffer0.append("   AND CD4   = '"+ transCD +"'						    		\n");	
-			sqlBuffer0.append("   GROUP BY RETC, REFCD						    				\n");
+			sqlBuffer0.append("SELECT   RETC AS COCD			\n");	
+			sqlBuffer0.append("	, REFCD  AS VENDOR_ID			\n");	
+			sqlBuffer0.append("	FROM TBB150						\n");
+			sqlBuffer0.append("	WHERE REFTP = 'ZY'				\n");
+			sqlBuffer0.append("	AND REFCD <> '0000'				\n");
+			sqlBuffer0.append("	AND USEYN = 'Y'					\n");
+			sqlBuffer0.append("	AND CD3   = 'Y'					\n");
+			sqlBuffer0.append("	AND CD4   = '"+ transCD +"'		\n");
+			sqlBuffer0.append("	GROUP BY RETC, REFCD			\n");
 			
 			/* 0. Sterling 상품 수신후 UPDATE SQL 작성 시작*/
 			/* 0-1. 주 쿼리문*/
-			sqlBuffer1.append("UPDATE  TBD260              	\n");
-			sqlBuffer1.append("    SET STATUS 	   = ?      \n");
-			sqlBuffer1.append("        ,STATUS_MSG = ?      \n");
-			sqlBuffer1.append("        ,UPDUSER 	= 'SCAPI'                              			\n");
+			sqlBuffer1.append("UPDATE  TBD260              	  \n");
+			sqlBuffer1.append("    SET STATUS 	   = ?        \n");
+			sqlBuffer1.append("        ,STATUS_MSG = ?        \n");
+			sqlBuffer1.append("        ,UPDUSER 	= 'SCAPI' \n");
 			sqlBuffer1.append("        ,UPDTIME 	= TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')       	\n");			
-			sqlBuffer1.append("WHERE   TRAN_DATE <= ?        \n");
-			sqlBuffer1.append("AND     TRAN_SEQ	 <= ?        \n");
-			sqlBuffer1.append("AND     BARCODE 	 = ?        \n");
-			sqlBuffer1.append("AND     COCD 	 = ?        \n");		
-			// sqlBuffer1.append("AND     WHCD 	 = ?        \n");	// made as comment [IOS 2016. 4. 8.]
-			sqlBuffer1.append("AND     STATUS IN ('00', '05') \n");	
+			sqlBuffer1.append("WHERE   TRAN_DATE <= ?         \n");
+			sqlBuffer1.append("AND     TRAN_SEQ	 <= ?         \n");
+			sqlBuffer1.append("AND     BARCODE 	 = ?          \n");
+			sqlBuffer1.append("AND     COCD 	 = ?          \n");		
+			sqlBuffer1.append("AND     VENDOR_ID 	 = ?      \n");
+			sqlBuffer1.append("AND     STATUS IN ('00', '05') \n");
 			
 			/* 0-2. 서브 쿼리문*/
 			/* 0-3. 카운트 쿼리문*/
@@ -1223,6 +1225,7 @@ public class ScApiCreateREDIS {
 							pstmt1.setString(4, tranSeq);	// 전송순번						
 							pstmt1.setString(5, barcode);   // 바코드
 							pstmt1.setString(6, org_code);	// 사업부코드
+							pstmt1.setString(7, vendor_id);
 							
 							pstmt1.executeUpdate();						
 						}
