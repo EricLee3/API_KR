@@ -324,6 +324,7 @@ public class CubeService {
 						post.addParameter("data", URLEncoder.encode(jsonObject.toString(), "euc-kr"));
 						int resultCode = httpClient.executeMethod(post);
 						
+						Logger.debug("[Remote Server] response : " + String.valueOf(resultCode));
 						if (resultCode == 200)  {
 							BufferedReader br = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream()));
 							
@@ -552,7 +553,8 @@ public class CubeService {
 					    post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 					    post.addParameter("data", URLEncoder.encode(strReqItemResult.toString(), "UTF-8"));
 					    int resultCode = httpClient.executeMethod(post);
-							
+						
+					    Logger.debug("[Remote Server] response : " + String.valueOf(resultCode));
 					    if (resultCode == 200)  {
 					    	BufferedReader br = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream()));
 								
@@ -893,6 +895,7 @@ public class CubeService {
 						post.addParameter("data", URLEncoder.encode(sendingStockInfo.toString(), "euc-kr"));
 						int resultCode = httpClient.executeMethod(post);
 						
+						Logger.debug("[Remote Server] response : " + String.valueOf(resultCode));
 						if (resultCode == 200)  {
 							BufferedReader br = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream()));
 							
@@ -1090,7 +1093,7 @@ public class CubeService {
 					    PostMethod post = new PostMethod(url);
 					    int conTimeOut = 120000;
 					    int soTimeOut = 120000;
-					    int idleTimeOut = 120000;
+					    int idleTimeOut = 120000; 
 							
 					    // data 생성
 					    // data = tranDate, tranSeq, vendorId
@@ -1109,7 +1112,8 @@ public class CubeService {
 					    post.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 					    post.addParameter("data", URLEncoder.encode(strReqItemResult.toString(), "UTF-8"));
 					    int resultCode = httpClient.executeMethod(post);
-							
+						
+					    Logger.debug("[Remote Server] response : " + String.valueOf(resultCode));
 					    if (resultCode == 200)  {
 					    	BufferedReader br = new BufferedReader(new InputStreamReader(post.getResponseBodyAsStream()));
 								
