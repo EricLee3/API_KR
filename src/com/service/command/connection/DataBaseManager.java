@@ -85,6 +85,10 @@ public class DataBaseManager{
 				connectInfo.setDbConnect("jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8");
 				connectInfo.setDbAccount("mrkcube");
 				connectInfo.setDbPassword("mrkcube1234");
+			} else if(dbmode.equals("stdcube")){
+				connectInfo.setDbConnect("jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8");
+				connectInfo.setDbAccount("stdcube");
+				connectInfo.setDbPassword("!436401std@");
 			}
 			//wms 개발
 			else if(dbmode.equals("wmsapi")){
