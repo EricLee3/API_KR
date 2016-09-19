@@ -13,7 +13,7 @@ public class PantosTokenMgr {
 		Logger.debug("************************************** START **************************************");
 		System.out.println("Start!");
 		
-		String startPantosMgr ="2016-01-27 04:00:00";
+		String startPantosMgr ="2016-09-20 04:00:00";
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		Calendar cal = Calendar.getInstance();
 		Timer t1 = new Timer(false);
