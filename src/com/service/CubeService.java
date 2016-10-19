@@ -2045,6 +2045,11 @@ public class CubeService {
 				//발주취소조회
 				DataBaseManager.prepareCall(conn, "{call P_RECV_INORDER_CANCEL('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				
+				if (transcd.equals("20")) {	//WCONCEPT URL [KBJ 20161019]
+					//발주취소조회 등록 후 주문취소완료 정보 전송
+					sendOrderAfterCheck(dbmode, "OrderCancelConfirm", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
+				}
+				
 			} else if(call_api.equals("OrderReturnRetrieve")) {
 				conn = DataBaseManager.getConnection(dbmode);
 				//반품정보조회
@@ -2059,6 +2064,11 @@ public class CubeService {
 				conn = DataBaseManager.getConnection(dbmode);
 				//반품취소조회
 				DataBaseManager.prepareCall(conn, "{call P_RECV_REFUND_CANCEL('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
+				
+				if (transcd.equals("20")) {	//WCONCEPT URL [KBJ 20161019]
+					//반품취소조회 등록 후 반품취소 정보 전송
+					sendOrderAfterCheck(dbmode, "OrderReturnCancelConfirm", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
+				}
 				
 			} else if(call_api.equals("ShopRecvOrder") || call_api.equals("ShopRecvClame")) {
 				conn = DataBaseManager.getConnection("shoplinker");
@@ -2739,11 +2749,24 @@ public class CubeService {
 							
 							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
 							
+						} else if(call_api.equals("OrderCancelConfirm")) {	//주문취소확인 KBJ 20161019
+							vendor_id = vMap.get("VENDOR_ID");
+							ship_id = vMap.get("SHIP_ID");
+							
+							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+
 						} else if(call_api.equals("OrderReturnRetrieveCheck")) {	//반품정보확인
 							vendor_id = vMap.get("VENDOR_ID");
 							ship_id = vMap.get("SHIP_ID");
 							
 							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+
+						} else if(call_api.equals("OrderReturnCancelConfirm")) {	//반품취소확인 KBJ 20161019
+							vendor_id = vMap.get("VENDOR_ID");
+							ship_id = vMap.get("SHIP_ID");
+							
+							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+
 						}
 						
 						

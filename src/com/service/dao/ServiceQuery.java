@@ -73,9 +73,15 @@ public class ServiceQuery {
 		}else if(key.equals("ServiceDAO.OrderRetrieveCheck")){
 			//발주조회 등록 후 주문완료 정보 확인
 			query = OrderRetrieveCheck(call_dt,call_seq,transcd);
+		}else if(key.equals("ServiceDAO.OrderCancelConfirm")){
+			//발주취소조회 등록 후 주문취소 정보 확인 KBJ 20161019
+			query = OrderCancelConfirm(call_dt,call_seq,transcd);
 		}else if(key.equals("ServiceDAO.OrderReturnRetrieveCheck")){
 			//반품정보조회 후 반품 정보 전송
 			query = OrderReturnRetrieveCheck(call_dt,call_seq,transcd);
+		}else if(key.equals("ServiceDAO.OrderReturnCancelConfirm")){
+			//발품취소조회 등록 후 반품취소 정보 확인 KBJ 20161019
+			query = OrderReturnCancelConfirm(call_dt,call_seq,transcd);
 		}else if(key.equals("ServiceDAO.setErrorRecvLog")){
 			//RECV 에러발생시 
 			query = setErrorRecvLog();
@@ -525,6 +531,24 @@ public class ServiceQuery {
 		return qry.toString();
 	}
 	
+	//발주취소조회 등록 후 주문취소 정보 확인 KBJ 20161019
+	private String OrderCancelConfirm(String call_dt, String call_seq, String transcd) {
+		StringBuffer qry = new StringBuffer();
+		
+		qry.append("SELECT DISTINCT VENDOR_ID							");
+		qry.append("       ,SHIP_ID										");
+		qry.append("       ,PONO										");
+		qry.append("       ,TRIM(TO_CHAR(POSEQ,'000')) AS POSEQ			");
+		qry.append("FROM   API_RECV_DATA								");
+		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
+		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
+		qry.append("AND	   RECV_GB		= '20'							");
+		qry.append("AND    ERROR_CODE   = '01'							");
+		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
+		
+		return qry.toString();
+	}
+
 	//반품정보조회 후 반품 정보 전송
 	private String OrderReturnRetrieveCheck(String call_dt, String call_seq, String transcd) {
 		StringBuffer qry = new StringBuffer();
@@ -543,6 +567,23 @@ public class ServiceQuery {
 		return qry.toString();
 	}
 
+	//반품취소조회 등록 후 반품취소 정보 확인 KBJ 20161019
+	private String OrderReturnCancelConfirm(String call_dt, String call_seq, String transcd) {
+		StringBuffer qry = new StringBuffer();
+		
+		qry.append("SELECT DISTINCT VENDOR_ID							");
+		qry.append("       ,SHIP_ID										");
+		qry.append("       ,PONO										");
+		qry.append("       ,TRIM(TO_CHAR(POSEQ,'000')) AS POSEQ			");
+		qry.append("FROM   API_RECV_DATA								");
+		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
+		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
+		qry.append("AND	   RECV_GB		= '40'							");
+		qry.append("AND    ERROR_CODE   = '01'							");
+		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
+		
+		return qry.toString();
+	}
 
 	//벤더, 조회일자 조회
 	private String getVendorList(String transcd) {

@@ -130,9 +130,15 @@ public class ServiceDAO extends ServiceQuery{
 			}else if(call_api.equals("OrderRetrieveCheck")){
 				//발주조회 등록 후 주문완료 정보 확인
 				sql = getSql("ServiceDAO.OrderRetrieveCheck",call_dt,call_seq,transcd);
+			}else if(call_api.equals("OrderCancelConfirm")){
+				//발주취소조회 등록 후 주문취소 정보 확인 KBJ 20161019
+				sql = getSql("ServiceDAO.OrderCancelConfirm",call_dt,call_seq,transcd);
 			}else if(call_api.equals("OrderReturnRetrieveCheck")){
 				//반품정보조회 후 반품 정보 전송
 				sql = getSql("ServiceDAO.OrderReturnRetrieveCheck",call_dt,call_seq,transcd);
+			}else if(call_api.equals("OrderReturnCancelConfirm")){
+				//반품취소조회 등록 후 반품취소 정보 확인 KBJ 20161019
+				sql = getSql("ServiceDAO.OrderReturnCancelConfirm",call_dt,call_seq,transcd);
 			}else if(call_api.equals("DeliveryHeaderInsert")){
 				//반품정보조회 후 반품 정보 전송
 				sql = getSql("ServiceDAO.DeliveryHeaderInsert",call_dt,call_seq,transcd);
