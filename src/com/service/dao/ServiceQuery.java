@@ -462,7 +462,7 @@ public class ServiceQuery {
 		qry.append("   AND B.REFTP = 'ZY'                                                                                                            ");
 		qry.append("   AND A.CBGU  = '2'                                                                                                             ");
 		qry.append("   AND A.GUBUN = '1'                                                                                                             ");
-		qry.append("   AND A.OUTDT BETWEEN to_char(sysdate-7,'YYYYMMDD') AND to_char(sysdate,'YYYYMMDD')                                             ");
+		qry.append("   AND A.OUTDT BETWEEN to_char(sysdate-20,'YYYYMMDD') AND to_char(sysdate,'YYYYMMDD')                                             ");
 		qry.append("   AND A.PODT >= TO_CHAR(SYSDATE -50, 'YYYYMMDD')                                   					                         ");
 		qry.append("   AND A.POSEQ < 90001                                                                                                           ");
 		qry.append("   AND NOT EXISTS ( SELECT 1                                                                                                     ");
@@ -470,7 +470,7 @@ public class ServiceQuery {
 		qry.append("                     WHERE SUBSTR(A.TEMPNO, 1, LENGTH(A.TEMPNO) -3) = C.SHIP_ID                                                  ");
 		qry.append("                       AND B.REFCD       = C.VENDOR_ID                                                                           ");
 		qry.append("                       AND C.RESULT_CODE = '000'                                                                                 ");
-		qry.append("                       AND C.CALL_DT    >= TO_CHAR(SYSDATE -10,'YYYYMMDD')                                                       ");
+		qry.append("                       AND C.CALL_DT    >= TO_CHAR(SYSDATE -25,'YYYYMMDD')                                                       ");
 		qry.append("                       AND C.CALL_API    = 'ReturnPickUpInsert'                                                                  ");
 		qry.append("                  )                                                                                                              ");
 		
@@ -543,7 +543,7 @@ public class ServiceQuery {
 		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
 		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
 		qry.append("AND	   RECV_GB		= '20'							");
-		qry.append("AND    ERROR_CODE   = '01'							");
+		qry.append("AND    ERROR_CODE   IN ('01', '02')					");
 		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
 		
 		return qry.toString();
@@ -579,7 +579,7 @@ public class ServiceQuery {
 		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
 		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
 		qry.append("AND	   RECV_GB		= '40'							");
-		qry.append("AND    ERROR_CODE   = '01'							");
+		qry.append("AND    ERROR_CODE   IN ('01', '02')					");
 		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
 		
 		return qry.toString();

@@ -2606,6 +2606,8 @@ public class CubeService {
 			result = "발주조회";
 		}else if(call_api.equals("OrderConfirm")){
 			result = "발주확인";
+		}else if(call_api.equals("OrderCancelConfirm")){ // 주문취소확인 추가 20161115 KBJ
+			result = "주문취소 확인";
 		}else if(call_api.equals("DeliveryInsert")){
 			result = "배송정보등록";
 		}else if(call_api.equals("SoldOutCancel")){
@@ -2616,6 +2618,8 @@ public class CubeService {
 			result = "반품정보조회";
 		}else if(call_api.equals("OrderReturnConfirm")){
 			result = "반품정보확인";
+		}else if(call_api.equals("OrderReturnCancelConfirm")){ // 반품취소확인 추가 20161115 KBJ
+			result = "반품취소 확인";
 		}else if(call_api.equals("ReturnPickUpInsert")){
 			result = "반품수거등록";
 		}else if(call_api.equals("OrderReturnCancelRetrieve")){
