@@ -79,6 +79,7 @@ public class ServiceDataInfo{
     String orderReleaseKey_org  = null;    //원주문확정키 추가(2015.02.25 하윤식)
     String nodeType				= null;	   //
     String strVendor_Pono		= null;	   //벤더번호 추가 [IOS 26-Jan-16] 
+    String strRet_memo		    = null;	   //교환/반품 사유 추가 KBJ 20161226 
 		
     
     public String getVendor_Pono()  {
@@ -451,4 +452,11 @@ public class ServiceDataInfo{
 		this.orderReleaseKey_org = orderReleaseKey_org;
 	}
 	
+	// 교환/반품 사유 추가 KBJ 20161226
+	public String getRet_memo() {
+		return strRet_memo;
+	}
+	public void setRet_memo(String strRet_memo) {
+		this.strRet_memo = strRet_memo;
+	}
 }

@@ -59,7 +59,7 @@ public class ScApiCreateREDIS {
 	private static String  ORDER_STORE_REJECT	= ":order:store:reject:C2M"; // 매장출고거부 수신( CUBE -> SC)
 
 	/* REDIS DB IP 운영서버 */   	
-	private static String  RED_IP	= "220.117.243.18";
+//	private static String  RED_IP	= "220.117.243.18";
 	
 	/* REDIS DB IP 테스트서버 */
 //	private static String  RED_IP 	= "1.214.91.21";
@@ -70,9 +70,14 @@ public class ScApiCreateREDIS {
 	/* Redis IDC test server*/
 //	private static String RED_IP = "121.189.18.56";
 	
+	/* Just Jinny REDIS DB IP 운영서버 */   	
+	private static String  RED_IP	= "52.78.211.9";
+
+	// Just Jinny REDIS real DB_INDEX 
+	private static int DB_INDEX 	= 9;
 	
 	// real DB_INDEX 
-	private static int DB_INDEX 	= 1;
+//	private static int DB_INDEX 	= 1;
 	// test DB_INDEX
 //	private static int DB_INDEX 	= 11;
 

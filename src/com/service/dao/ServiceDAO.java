@@ -352,6 +352,8 @@ public class ServiceDAO extends ServiceQuery{
 			params.add(dataInfo.getNodeType());
 			// inserted [IOS 26-Jan-26]
 			params.add(dataInfo.getVendor_Pono());
+			// 교환/반품 사유 추가 KBJ 20161226
+			params.add(dataInfo.getRet_memo());
 			
 			result = ExecQuery.update(conn, sql, params);
 		} catch (Exception e) {

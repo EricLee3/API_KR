@@ -622,6 +622,7 @@ public class ServiceQuery {
 	/*
 	 * 2015.08.31 STORE_GB 추가 by lee
 	 * VENDOR_PONO 추가 [IOS 26-JAN-16]
+	 * RET_DESC 추가(교환/반품 사유) KBJ 20161226
 	 * */
 	public String setRecvData(String transcd) {
 		StringBuffer qry = new StringBuffer();
@@ -636,7 +637,7 @@ public class ServiceQuery {
 		qry.append("        OPTION2, SALE_PRICE, DELI_PRICE, QTY, DELI_GB, ERROR_CODE,           	"); 
 		qry.append("        ERROR_MSG, INUSER, INTIME, ORI_SHIP_ID , RET_CODE, TRANS_STATUS,	 	");
 		qry.append("        CUST_EMAIL, CLAME_MEMO, CUBE_ITEM , COCD , WHCD	, ORDER_KEY, 			");
-		qry.append("        ORDERSEQ_KEY, SHIP_KEY, VENDOR_NM , STORE_GB , VENDOR_PONO				");
+		qry.append("        ORDERSEQ_KEY, SHIP_KEY, VENDOR_NM , STORE_GB , VENDOR_PONO, RET_DESC	");
 		qry.append("             )                                                               	"); 
 		qry.append("      VALUES ( ?, ?, ?, ?, ?, ?,            						         	"); 
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
@@ -647,7 +648,7 @@ public class ServiceQuery {
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
 		qry.append("              ?, ?, to_char(sysdate, 'YYYYMMDDHH24MISS'), ?, ?, '"+transcd+"',	");
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	");
-		qry.append("              ?, ?, ?, ?, ?					                                    ");
+		qry.append("              ?, ?, ?, ?, ?, ?				                                    ");
 		qry.append("             )                                                               	"); 
 		
 		return qry.toString();
@@ -735,11 +736,13 @@ public class ServiceQuery {
 	}
 	
 	//수신대상 차수
+	//SEQ가 네자리가 넘는 경우가 발생하여 다섯자리로 변경 KBJ 20170111
 	public String getRecvCallSeq() {
 		StringBuffer qry = new StringBuffer();
 		
 		qry.append(" SELECT /*+ INDEX_DESC(CALL_DT,CALL_SEQ) */						 				 ");
-		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(CALL_SEQ), 0)) + 1, '0000')) as CALL_SEQ ");
+//		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(CALL_SEQ), 0)) + 1, '0000')) as CALL_SEQ ");
+		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(TO_NUMBER(CALL_SEQ)), 0)) + 1, '00000')) as CALL_SEQ ");
 		qry.append("   FROM API_RECV_LOG															 ");
 		qry.append("  WHERE CALL_DT = TO_CHAR(SYSDATE,'YYYYMMDD') 						 			 ");
 		//qry.append("  WHERE CALL_DT = ?						 			 ");
@@ -750,11 +753,13 @@ public class ServiceQuery {
 	
 	
 	//송신대상 차수
+	//SEQ가 네자리가 넘는 경우가 발생하여 다섯자리로 변경 KBJ 20170111
 	public String getSendCallSeq() {
 		StringBuffer qry = new StringBuffer();
 		
 		qry.append(" SELECT /*+ INDEX_DESC(CALL_DT,CALL_SEQ) */						 				 ");
-		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(CALL_SEQ), 0)) + 1, '0000')) as CALL_SEQ ");
+//		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(CALL_SEQ), 0)) + 1, '0000')) as CALL_SEQ ");
+		qry.append("        LTRIM(TO_CHAR(TO_NUMBER(NVL(MAX(TO_NUMBER(CALL_SEQ)), 0)) + 1, '00000')) as CALL_SEQ ");
 		qry.append("   FROM API_SEND_LOG															 ");
 		qry.append("  WHERE CALL_DT = TO_CHAR(SYSDATE,'YYYYMMDD') 						 			 ");
 		

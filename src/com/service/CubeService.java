@@ -1905,6 +1905,7 @@ public class CubeService {
 									dInfo.setOrderSeqKey("");									
 									dInfo.setShipKey("");
 									dInfo.setVendorNm(StringUtil.nullTo((String)ordMap.get("SHOPNAME"), ""));	// [IOS 2016. 6. 21.] 
+									dInfo.setRet_memo(StringUtil.nullTo((String)pMap.get("RET_MEMO"), ""));		// 교환/반품 사유 추가 KBJ 20161226
 									
 									dao.setRecvData(conn, dInfo, transcd);
 									seq++;
@@ -2045,7 +2046,7 @@ public class CubeService {
 				//발주취소조회
 				DataBaseManager.prepareCall(conn, "{call P_RECV_INORDER_CANCEL('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				
-				if (transcd.equals("20")) {	//WCONCEPT URL [KBJ 20161019]
+				if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL [KBJ 20161019] FAVINIT 추가 KBJ 20161229
 					//발주취소조회 등록 후 주문취소완료 정보 전송
 					sendOrderAfterCheck(dbmode, "OrderCancelConfirm", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
 				}
@@ -2065,7 +2066,7 @@ public class CubeService {
 				//반품취소조회
 				DataBaseManager.prepareCall(conn, "{call P_RECV_REFUND_CANCEL('"+call_dt+"','"+call_seq+"','"+transcd+"')}");
 				
-				if (transcd.equals("20")) {	//WCONCEPT URL [KBJ 20161019]
+				if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL [KBJ 20161019] FAVINIT 추가 KBJ 20161229
 					//반품취소조회 등록 후 반품취소 정보 전송
 					sendOrderAfterCheck(dbmode, "OrderReturnCancelConfirm", call_dt, call_seq, connip, transcd, cmID, cmPassKey);
 				}

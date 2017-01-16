@@ -97,6 +97,14 @@ public class DataBaseManager{
 				connectInfo.setDbConnect("jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8");
 				connectInfo.setDbAccount("ziccube");
 				connectInfo.setDbPassword("!736533zic@");
+			} else if(dbmode.equals("spxcube")){
+				connectInfo.setDbConnect("jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8");
+				connectInfo.setDbAccount("spxcube");
+				connectInfo.setDbPassword("!836544spx@");
+			} else if(dbmode.equals("b2bcube")){
+				connectInfo.setDbConnect("jdbc:oracle:thin:@220.117.243.24:1521:CBUTF8");
+				connectInfo.setDbAccount("b2bcube");
+				connectInfo.setDbPassword("!936555b2b@");
 			}
 			//wms 개발
 			else if(dbmode.equals("wmsapi")){
