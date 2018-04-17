@@ -357,6 +357,7 @@ public class CubeService {
 							pstmt5.setString(8, refCd);
 							
 							rs5 = pstmt5.executeQuery();
+							
 							// to deal with rs5
 						}
 						post.releaseConnection();
@@ -390,6 +391,8 @@ public class CubeService {
 			Logger.debug("###Error###:"+ methodName +" Error sql:"+ e.toString());			
 			sendMessage = "FAIL!["+e.toString()+"]";			
 		} catch (Exception e) {
+			// error 발생 시 rollback 수행 KBJ 20170605
+			conn.rollback();
 			Logger.debug("###Error###:"+ methodName +" Error :"+ e.toString());
 			sendMessage = "FAIL!!!["+e.toString()+"]";
 		} finally  {
@@ -633,6 +636,8 @@ public class CubeService {
 						conn.rollback();
 						Logger.debug("IOS - SQLException occurred : " + e);
 					} catch (Exception e)  {
+						// error 발생 시 rollback 수행 KBJ 20170605
+						conn.rollback();
 						Logger.debug("IOS - Exception occurred : " + e);
 					}
 					count++;		// 사업부별 성공 카운트
@@ -652,6 +657,8 @@ public class CubeService {
 			Logger.debug("###Error###:"+ methodName +" Error sql:"+ e.toString());			
 			sendMessage = "FAIL!["+e.toString()+"]";			
 		} catch (Exception e) {
+			// 에러 발생 시 rollback 수행 KBJ 20170605
+			conn.rollback();
 			Logger.debug("###Error###:"+ methodName +" Error :"+ e.toString());
 			sendMessage = "FAIL!!!["+e.toString()+"]";
 		} finally  {
@@ -833,6 +840,7 @@ public class CubeService {
 	        	
 	        	cstmt.executeUpdate();
 	        	
+	        	
 	        	String errcode 	= cstmt.getString(1);
 	        	String errmsg 	= cstmt.getString(2);	
 	            String tranDt  	= cstmt.getString(3);
@@ -878,9 +886,9 @@ public class CubeService {
 					try   {
 						Logger.debug("Json Object : "+ sendingStockInfo.toString());
 						PostMethod post = new PostMethod(url);
-						int conTimeOut = 120000;
-						int soTimeOut = 120000;
-						int idleTimeOut = 120000;
+						int conTimeOut = 300000;
+						int soTimeOut = 300000;
+						int idleTimeOut = 300000;
 												
 						MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
 						HttpClient httpClient = new HttpClient(connectionManager);
@@ -927,12 +935,15 @@ public class CubeService {
 							pstmt3.setString(7, refCd);
 							
 							rs3 = pstmt3.executeQuery();
+							
 						}
 						post.releaseConnection();
 					} catch (SQLException e)  {
 						conn.rollback();
 						Logger.debug("IOS - SQLException occurred : " + e);
 					} catch (Exception e)  {
+						// 에러 발생 시 rollback 수행 KBJ 20170605
+						conn.rollback();
 						Logger.debug("IOS - Exception occurred : " + e);
 					}
 	
@@ -957,6 +968,8 @@ public class CubeService {
 			Logger.debug("###Error###:"+ methodName +" Error sql:"+ e.toString());			
 			sendMessage = "FAIL!["+e.toString()+"]";			
 		} catch (Exception e) {
+			// 에러 발생 시 rollback 수행 KBJ 20170605
+			conn.rollback();
 			Logger.debug("###Error###:"+ methodName +" Error :"+ e.toString());
 			sendMessage = "FAIL!!!["+e.toString()+"]";
 		} finally  {
@@ -1091,9 +1104,9 @@ public class CubeService {
 					try   {
 					    // 생성된 Json data 전송 - Hitherto exists in this member function...
 					    PostMethod post = new PostMethod(url);
-					    int conTimeOut = 120000;
-					    int soTimeOut = 120000;
-					    int idleTimeOut = 120000; 
+					    int conTimeOut = 300000;
+					    int soTimeOut = 300000;
+					    int idleTimeOut = 300000; 
 							
 					    // data 생성
 					    // data = tranDate, tranSeq, vendorId
@@ -1170,6 +1183,8 @@ public class CubeService {
 									
 									// update to be successful
 									int x = pstmt2.executeUpdate();
+									
+									
 									Logger.debug("Query : " + pstmt2.toString());
 									rtList.clear();
 							    } // end for
@@ -1185,6 +1200,8 @@ public class CubeService {
 						conn.rollback();
 						Logger.debug("IOS - SQLException occurred : " + e);
 					} catch (Exception e)  {
+						// 에러발생 시 rollback 수행 KBJ 20170605
+						conn.rollback();
 						Logger.debug("IOS - Exception occurred : " + e);
 					}
 					count++;		// 사업부별 성공 카운트
@@ -1204,6 +1221,8 @@ public class CubeService {
 			Logger.debug("###Error###:"+ methodName +" Error sql:"+ e.toString());			
 			sendMessage = "FAIL!["+e.toString()+"]";			
 		} catch (Exception e) {
+			// 에러 발생 시 rollback 수행 KBJ 20170605
+			conn.rollback();
 			Logger.debug("###Error###:"+ methodName +" Error :"+ e.toString());
 			sendMessage = "FAIL!!!["+e.toString()+"]";
 		} finally  {
@@ -1767,13 +1786,13 @@ public class CubeService {
 						server = connip+"/Cube/"+call_api+".asp?VENDOR_ID="+vendor_id+"&STA_DT="+sta_dt+"&END_DT="+end_dt;	//w컨셉 url
 					}
 					Logger.debug("vendor_id: "+vendor_id);
+					Logger.debug("[server]"+server.toString());
 
 					document = getDocument(server); 
 
 					if(document == null) {
 						continue;
 					}
-					Logger.debug("[server]"+server.toString());
 					
 					NodeList noneList = document.getDocumentElement().getChildNodes(); 
 					root = document.getDocumentElement();
@@ -1897,7 +1916,7 @@ public class CubeService {
 									dInfo.setOri_ship_id(StringUtil.nullTo((String)pMap.get("ORI_SHIP_ID"), ""));
 									dInfo.setQty(StringUtil.nullTo((String)pMap.get("QTY"), "0"));
 									dInfo.setCust_email("");
-									dInfo.setClame_memo("");
+									dInfo.setClame_memo(StringUtil.nullTo((String)pMap.get("CAN_CTYPE"), "")); // 취소 사유 값 사용 KBJ 20171206 
 									dInfo.setCube_item("");
 									dInfo.setCocd("");
 									dInfo.setWhcd("");
@@ -1906,6 +1925,12 @@ public class CubeService {
 									dInfo.setShipKey("");
 									dInfo.setVendorNm(StringUtil.nullTo((String)ordMap.get("SHOPNAME"), ""));	// [IOS 2016. 6. 21.] 
 									dInfo.setRet_memo(StringUtil.nullTo((String)pMap.get("RET_MEMO"), ""));		// 교환/반품 사유 추가 KBJ 20161226
+									dInfo.setOverSea_Gubun(StringUtil.nullTo((String)ordMap.get("OVERSEAGUBUN"), ""));	// 해외구분 코드 추가 KBJ 20170223 
+									dInfo.setCountry(StringUtil.nullTo((String)ordMap.get("COUNTRY"), ""));	// 국가 코드 추가 KBJ 20170223 
+									dInfo.setState(StringUtil.nullTo((String)ordMap.get("STATE"), ""));	// 주 코드 추가 KBJ 20170223 
+									dInfo.setCity(StringUtil.nullTo((String)ordMap.get("CITY"), ""));	// 도시 코드 추가 KBJ 20170223 
+									dInfo.setThCd(StringUtil.nullTo((String)ordMap.get("THCD"), ""));	// 통화 코드 추가 KBJ 20170223 
+									dInfo.setNetPri(StringUtil.nullTo((String)pMap.get("NETPRI"), ""));		//  KBJ 20170223
 									
 									dao.setRecvData(conn, dInfo, transcd);
 									seq++;
@@ -2246,10 +2271,28 @@ public class CubeService {
 			GetMethod get = new GetMethod(serverUrl);
 			
 			httpClient = new HttpClient();
+			// httpClient에 타임아웃 설정 KBJ 20170608
+			// 타임아웃 제거 KBJ 20170619
+			// 타임아웃 재설정 KBJ 20170621
+			httpClient.getParams().setParameter("http.protocol.expect-continue", false);
+			httpClient.getParams().setParameter("http.connection.timeout", 60000);
+			httpClient.getParams().setParameter("http.socket.timeout", 60000);
+
 			httpClient.executeMethod(get);
 			
+			// serverUrl에 FAVINIT 주소인지 아닌지 구분하여 UTF-8로 수신할 수 있도록 변경 KBJ 20170725
+		    //if(serverUrl.contains("http://prs.favinit.com")) {
+	    	if(serverUrl.contains("prs.favinit.com")) {
+		    	br = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), "UTF-8"));
+		    	Logger.debug("FAVINIT 수신건");
+		    } else {
+		    	br = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream()));
+		    	Logger.debug("WCONCEPT 수신건");
+		    }
 			
-			br = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream()));
+			// BufferedReader 시 UTF-8로 가져올 수 있도록 수정 KBJ 20170725
+//			br = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream()));
+//			br = new BufferedReader(new InputStreamReader(get.getResponseBodyAsStream(), "UTF-8"));
 			sb = new StringBuffer();
 			org.xml.sax.InputSource is = null;
 			
@@ -2261,16 +2304,25 @@ public class CubeService {
 			}
 			
 			if(is!=null) {
-				is.setEncoding("euc-kr");
+				// serverUrl에 FAVINIT 주소인지 아닌지 구분하여 UTF-8로 수신할 수 있도록 변경 KBJ 20170725
+				if(serverUrl.contains("http://prs.favinit.com")) {
+					is.setEncoding("utf-8");
+				} else {
+					is.setEncoding("euc-kr");
+				}
 				br.close();
 				DocumentBuilder _docBuilder = DocumentBuilderFactory.newInstance()
 						.newDocumentBuilder();			
 				document = _docBuilder.parse(is);
 			} else {
+				// bufferedReader close 구문 추가 KBJ 20170607
+				br.close();
 				return null;
 			}
 		} catch (Exception e) {
 			Logger.error(e);
+			// 에러 발생 시 null 값을 리턴 KBJ 20170621
+			return null;
 		}
 		
 		return document;
@@ -2721,6 +2773,8 @@ public class CubeService {
 		String deli_company_id	= "";	//배송사코드
 		String bl_no 			= ""; 	//운송장번호
 		String cancel_code 		= "";	//주문취소사유
+		String error_cd			= "";	//큐브처리코드
+		String reason_cd		= "";	//큐브미처리사유
 		
 		if (transcd.equals("20")|| transcd.equals("50")) {	//WCONCEPT URL or Favinit URL [IOS favinit inserting 08-Mar-16]
 			inuser = "BATCH";
@@ -2749,28 +2803,72 @@ public class CubeService {
 						}
 						
 						if (call_api.equals("OrderRetrieveCheck")) {	//발주확인
-							vendor_id = vMap.get("VENDOR_ID");
-							ship_id = vMap.get("SHIP_ID");
 							
-							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+							//Favinit이면 처리코드,실패사유코드 항목 추가 Beavis 20180403
+							if(transcd.equals("50")) {
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								error_cd = vMap.get("ERROR_CODE");
+								reason_cd = vMap.get("REASON_CD");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id +"&ERROR_CODE="+ error_cd +"&REASON_CD="+ reason_cd);
+							}else{
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);								
+							}
 							
 						} else if(call_api.equals("OrderCancelConfirm")) {	//주문취소확인 KBJ 20161019
-							vendor_id = vMap.get("VENDOR_ID");
-							ship_id = vMap.get("SHIP_ID");
 							
-							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+							//Favinit이면 처리코드,실패사유코드 항목 추가 Beavis 20180403
+							if(transcd.equals("50")) {
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								error_cd = vMap.get("ERROR_CODE");
+								reason_cd = vMap.get("REASON_CD");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id +"&ERROR_CODE="+ error_cd +"&REASON_CD="+ reason_cd);
+							}else{
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);								
+							}
 
 						} else if(call_api.equals("OrderReturnRetrieveCheck")) {	//반품정보확인
-							vendor_id = vMap.get("VENDOR_ID");
-							ship_id = vMap.get("SHIP_ID");
 							
-							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+							//Favinit이면 처리코드,실패사유코드 항목 추가 Beavis 20180403
+							if(transcd.equals("50")) {
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								error_cd = vMap.get("ERROR_CODE");
+								reason_cd = vMap.get("REASON_CD");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id +"&ERROR_CODE="+ error_cd +"&REASON_CD="+ reason_cd);
+							}else{
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);								
+							}
 
 						} else if(call_api.equals("OrderReturnCancelConfirm")) {	//반품취소확인 KBJ 20161019
-							vendor_id = vMap.get("VENDOR_ID");
-							ship_id = vMap.get("SHIP_ID");
 							
-							server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);
+							//Favinit이면 처리코드,실패사유코드 항목 추가 Beavis 20180403
+							if(transcd.equals("50")) {
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								error_cd = vMap.get("ERROR_CODE");
+								reason_cd = vMap.get("REASON_CD");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id +"&ERROR_CODE="+ error_cd +"&REASON_CD="+ reason_cd);
+							}else{
+								vendor_id = vMap.get("VENDOR_ID");
+								ship_id = vMap.get("SHIP_ID");
+								
+								server.append("?VENDOR_ID="+ vendor_id +"&SHIP_ID="+ ship_id);								
+							}
 
 						}
 						
@@ -2780,12 +2878,19 @@ public class CubeService {
 						}
 						
 						Document document = getDocument(server.toString());
-						@SuppressWarnings("unused")
-						NodeList noneList = document.getDocumentElement().getChildNodes();
-						root = document.getDocumentElement();
-	
-						error_code = root.getElementsByTagName("CODE").item(0).getFirstChild().getNodeValue();
-						message = root.getElementsByTagName("MESSAGE").item(0).getFirstChild().getNodeValue();
+						// document가 null인 경우 (에러 발생 또는 XML이 null인 경우) API_SEND_LOG 테이블에 에러로 기록 KBJ 20170621
+						if (document == null) {
+							error_code = "999";
+							message = "전송 중 타임아웃이 발생하였습니다.";
+						} else {
+							@SuppressWarnings("unused")
+							NodeList noneList = document.getDocumentElement().getChildNodes();
+							root = document.getDocumentElement();
+							
+							error_code = root.getElementsByTagName("CODE").item(0).getFirstChild().getNodeValue();
+							message = root.getElementsByTagName("MESSAGE").item(0).getFirstChild().getNodeValue();
+							
+						}
 						
 					}
 					/*	커넥트미(CM) API 연동 작업 부분 주석 처리.. 2014-03-06

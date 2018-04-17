@@ -354,6 +354,18 @@ public class ServiceDAO extends ServiceQuery{
 			params.add(dataInfo.getVendor_Pono());
 			// 교환/반품 사유 추가 KBJ 20161226
 			params.add(dataInfo.getRet_memo());
+			// 해외구분 코드 추가 KBJ 20170223
+			params.add(dataInfo.getOverSea_Gubun());
+			// 국가 코드 추가 KBJ 20170223
+			params.add(dataInfo.getCountry());
+			// 주 코드 추가 KBJ 20170223
+			params.add(dataInfo.getState());
+			// 도시 코드 추가 KBJ 20170223
+			params.add(dataInfo.getCity());
+			// 통화 코드 추가 KBJ 20170223
+			params.add(dataInfo.getThCd());
+			// 외화 단가 추가 KBJ 20170223
+			params.add(dataInfo.getNetPri());
 			
 			result = ExecQuery.update(conn, sql, params);
 		} catch (Exception e) {

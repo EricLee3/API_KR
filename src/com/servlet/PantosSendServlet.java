@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import com.service.PantosConfirmService;
 import com.service.PantosInspectService;
+import com.service.PantosLabelService;
 
 public class PantosSendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +26,9 @@ public class PantosSendServlet extends HttpServlet {
 		} else if(fork.equals("wmsConfirm")) {
 			PantosConfirmService ptnConfirm = new PantosConfirmService();
 			resp = ptnConfirm.send(request, response);
+		} else if(fork.equals("wmsLabel")) {
+			PantosLabelService ptnLabel = new PantosLabelService();
+			resp = ptnLabel.send(request, response);
 		} else if(fork.equals("ics")) {
 			PantosInspectService ptnInspect = new PantosInspectService();
 			resp = ptnInspect.send(request, response);

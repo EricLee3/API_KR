@@ -23,8 +23,8 @@
 	String transCD = "20";	//큐브 구분코드 (10:wizwid, 20:wck, 30:mangoKR)
 	String Connip = ""; 	//w컨셉 ip
 
-	//Connip = "http://prs.wconcept.co.kr";		//리얼
-	Connip = "http://testprs.wconcept.co.kr";	//테스트
+	Connip = "http://prs.wconcept.co.kr";		//리얼
+	//Connip = "http://testprs.wconcept.co.kr";	//테스트
 	
 	if (dbmode.equals("") || dbmode == null) {
 		out.print("DB명이 올바르지않습니다.");
@@ -33,7 +33,8 @@
 			cs.getOrderRecvData(dbmode, inuser, command, Connip, transCD);  	
 		
 		} else if (command.equals("OrderConfirm")) {				//발주확인
-			//cs.getOrderSendData(dbmode, inuser, command,Connip, transCD);		//cs.sendOrderAfterCheck 에서 처리..
+			// 주석처리 되었던 내용 주석 해제 KBJ 20170608
+			cs.getOrderSendData(dbmode, inuser, command,Connip, transCD);		//cs.sendOrderAfterCheck 에서 처리..
 		
 		} else if (command.equals("DeliveryInsert")) {				//배송정보등록
 			cs.getOrderSendData(dbmode, inuser, command,Connip, transCD); 
@@ -48,7 +49,8 @@
 			cs.getOrderRecvData(dbmode, inuser, command, Connip, transCD);  	
 		
 		} else if (command.equals("OrderReturnConfirm")) {			//반품정보확인
-			//cs.getOrderSendData(dbmode, inuser, command,Connip, transCD);		//cs.sendOrderAfterCheck 에서 처리..
+			// 주석처리 되었던 내용 주석 해제 KBJ 20170608
+			cs.getOrderSendData(dbmode, inuser, command,Connip, transCD);		//cs.sendOrderAfterCheck 에서 처리..
 		
 		} else if (command.equals("ReturnPickUpInsert")) {			//반품수거등록
 			cs.getOrderSendData(dbmode, inuser, command,Connip, transCD);

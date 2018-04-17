@@ -71,17 +71,41 @@ public class ServiceQuery {
 			//반품취소처리
 			query = ReturnRefuse(transcd);
 		}else if(key.equals("ServiceDAO.OrderRetrieveCheck")){
-			//발주조회 등록 후 주문완료 정보 확인
-			query = OrderRetrieveCheck(call_dt,call_seq,transcd);
+			//Favinit 처리코드, 사유코드 항목 추가 Beavis 20180403
+			if(transcd.equals("50")){
+				//발주조회 등록 후 주문완료 정보 확인 favinit
+				query = OrderRetrieveCheckFavinit(call_dt,call_seq,transcd);
+			}else{
+				//발주조회 등록 후 주문완료 정보 확인
+				query = OrderRetrieveCheck(call_dt,call_seq,transcd);				
+			}			
 		}else if(key.equals("ServiceDAO.OrderCancelConfirm")){
-			//발주취소조회 등록 후 주문취소 정보 확인 KBJ 20161019
-			query = OrderCancelConfirm(call_dt,call_seq,transcd);
+			//Favinit 처리코드, 사유코드 항목 추가 Beavis 20180403
+			if(transcd.equals("50")){
+				//발주취소조회 등록 후 주문취소 정보 확인 favinit
+				query = OrderCancelConfirmFavinit(call_dt,call_seq,transcd);
+			}else{
+				//발주취소조회 등록 후 주문취소 정보 확인 KBJ 20161019
+				query = OrderCancelConfirm(call_dt,call_seq,transcd);				
+			}			
 		}else if(key.equals("ServiceDAO.OrderReturnRetrieveCheck")){
-			//반품정보조회 후 반품 정보 전송
-			query = OrderReturnRetrieveCheck(call_dt,call_seq,transcd);
+			//Favinit 처리코드, 사유코드 항목 추가 Beavis 20180403
+			if(transcd.equals("50")){
+				//반품정보조회 후 반품 정보 전송 favinit
+				query = OrderReturnRetrieveCheckFavinit(call_dt,call_seq,transcd);
+			}else{
+				//반품정보조회 후 반품 정보 전송
+				query = OrderReturnRetrieveCheck(call_dt,call_seq,transcd);
+			}
 		}else if(key.equals("ServiceDAO.OrderReturnCancelConfirm")){
-			//발품취소조회 등록 후 반품취소 정보 확인 KBJ 20161019
-			query = OrderReturnCancelConfirm(call_dt,call_seq,transcd);
+			//Favinit 처리코드, 사유코드 항목 추가 Beavis 20180403
+			if(transcd.equals("50")){
+				//발품취소조회 등록 후 반품취소 정보 확인 favinit
+				query = OrderReturnCancelConfirmFavinit(call_dt,call_seq,transcd);
+			}else{
+				//발품취소조회 등록 후 반품취소 정보 확인 KBJ 20161019
+				query = OrderReturnCancelConfirm(call_dt,call_seq,transcd);				
+			}
 		}else if(key.equals("ServiceDAO.setErrorRecvLog")){
 			//RECV 에러발생시 
 			query = setErrorRecvLog();
@@ -514,6 +538,7 @@ public class ServiceQuery {
 	}
 	
 	//발주조회 등록 후 주문완료 정보 확인
+	//수신한 주문건도 재전송 할 수 있도록 수정 (ERROR_CODE IN ('01', '02')로 변경) KBJ 20170621
 	private String OrderRetrieveCheck(String call_dt, String call_seq, String transcd) {
 		StringBuffer qry = new StringBuffer();
 		
@@ -525,7 +550,26 @@ public class ServiceQuery {
 		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
 		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
 		qry.append("AND	   RECV_GB		= '10'							");
-		qry.append("AND    ERROR_CODE   = '01'							");
+		qry.append("AND    ERROR_CODE   IN ('01', '02')					");
+		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
+		
+		return qry.toString();
+	}
+	
+	//발주조회 등록 후 처리, 실패사유 정보 확인 Beavis 20180403
+	private String OrderRetrieveCheckFavinit(String call_dt, String call_seq, String transcd) {
+		StringBuffer qry = new StringBuffer();
+		
+		qry.append("SELECT DISTINCT VENDOR_ID							");
+		qry.append("       ,SHIP_ID										");
+		qry.append("       ,PONO										");
+		qry.append("       ,TRIM(TO_CHAR(POSEQ,'000')) AS POSEQ			");
+		qry.append("       ,ERROR_CODE									");
+		qry.append("       ,REASON_CD									");
+		qry.append("FROM   API_RECV_DATA								");
+		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
+		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
+		qry.append("AND	   RECV_GB		= '10'							");
 		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
 		
 		return qry.toString();
@@ -548,8 +592,28 @@ public class ServiceQuery {
 		
 		return qry.toString();
 	}
+	
+	//발주취소조회 등록 후 처리, 실패사유 정보 확인 Beavis 20180403
+	private String OrderCancelConfirmFavinit(String call_dt, String call_seq, String transcd) {
+		StringBuffer qry = new StringBuffer();
+		
+		qry.append("SELECT DISTINCT VENDOR_ID							");
+		qry.append("       ,SHIP_ID										");
+		qry.append("       ,PONO										");
+		qry.append("       ,TRIM(TO_CHAR(POSEQ,'000')) AS POSEQ			");
+		qry.append("       ,ERROR_CODE									");
+		qry.append("       ,REASON_CD									");
+		qry.append("FROM   API_RECV_DATA								");
+		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
+		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
+		qry.append("AND	   RECV_GB		= '20'							");
+		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
+		
+		return qry.toString();
+	}
 
 	//반품정보조회 후 반품 정보 전송
+	//수신한 반품건도 재전송 할 수 있도록 수정 (ERROR_CODE IN ('01', '02')로 변경) KBJ 20170621
 	private String OrderReturnRetrieveCheck(String call_dt, String call_seq, String transcd) {
 		StringBuffer qry = new StringBuffer();
 		
@@ -561,7 +625,26 @@ public class ServiceQuery {
 		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
 		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
 		qry.append("AND	   RECV_GB		= '30'							");
-		qry.append("AND    ERROR_CODE   = '01'							");
+		qry.append("AND    ERROR_CODE   IN ('01', '02')					");
+		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
+		
+		return qry.toString();
+	}
+	
+	//반품정보조회 후 처리, 실패사유 정보 확인 Beavis 20180403
+	private String OrderReturnRetrieveCheckFavinit(String call_dt, String call_seq, String transcd) {
+		StringBuffer qry = new StringBuffer();
+		
+		qry.append("SELECT DISTINCT VENDOR_ID							");
+		qry.append("       ,SHIP_ID										");
+		qry.append("       ,PONO										");		
+		qry.append("       ,TRIM(TO_CHAR(POSEQ,'000')) AS POSEQ			");
+		qry.append("       ,ERROR_CODE									");
+		qry.append("       ,REASON_CD									");
+		qry.append("FROM   API_RECV_DATA								");
+		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
+		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
+		qry.append("AND	   RECV_GB		= '30'							");
 		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
 		
 		return qry.toString();
@@ -580,6 +663,25 @@ public class ServiceQuery {
 		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
 		qry.append("AND	   RECV_GB		= '40'							");
 		qry.append("AND    ERROR_CODE   IN ('01', '02')					");
+		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
+		
+		return qry.toString();
+	}
+	
+	//반품취소조회 등록 후 처리, 실패사유 정보 확인 Beavis 20180403
+	private String OrderReturnCancelConfirmFavinit(String call_dt, String call_seq, String transcd) {
+		StringBuffer qry = new StringBuffer();
+		
+		qry.append("SELECT DISTINCT VENDOR_ID							");
+		qry.append("       ,SHIP_ID										");
+		qry.append("       ,PONO										");
+		qry.append("       ,TRIM(TO_CHAR(POSEQ,'000')) AS POSEQ			");
+		qry.append("       ,ERROR_CODE									");
+		qry.append("       ,REASON_CD									");
+		qry.append("FROM   API_RECV_DATA								");
+		qry.append("WHERE  CALL_DT  	= '"+ call_dt +"'				");
+		qry.append("AND    CALL_SEQ  	= '"+ call_seq +"'				");
+		qry.append("AND	   RECV_GB		= '40'							");
 		qry.append("AND    TRANS_STATUS = '"+ transcd +"'				");
 		
 		return qry.toString();
@@ -623,6 +725,7 @@ public class ServiceQuery {
 	 * 2015.08.31 STORE_GB 추가 by lee
 	 * VENDOR_PONO 추가 [IOS 26-JAN-16]
 	 * RET_DESC 추가(교환/반품 사유) KBJ 20161226
+	 * 해외구분(OVERSEA_GUBUN), 국가(COUNTRY), 주(STATE), 도시(CITY), 통화코드(THCD), 외화단가(NETPRI) 추가 KBJ 20170223
 	 * */
 	public String setRecvData(String transcd) {
 		StringBuffer qry = new StringBuffer();
@@ -637,7 +740,8 @@ public class ServiceQuery {
 		qry.append("        OPTION2, SALE_PRICE, DELI_PRICE, QTY, DELI_GB, ERROR_CODE,           	"); 
 		qry.append("        ERROR_MSG, INUSER, INTIME, ORI_SHIP_ID , RET_CODE, TRANS_STATUS,	 	");
 		qry.append("        CUST_EMAIL, CLAME_MEMO, CUBE_ITEM , COCD , WHCD	, ORDER_KEY, 			");
-		qry.append("        ORDERSEQ_KEY, SHIP_KEY, VENDOR_NM , STORE_GB , VENDOR_PONO, RET_DESC	");
+		qry.append("        ORDERSEQ_KEY, SHIP_KEY, VENDOR_NM , STORE_GB , VENDOR_PONO, RET_DESC,	");
+		qry.append("        OVERSEA_GUBUN, COUNTRY, STATE , CITY , THCD, NETPRI						");
 		qry.append("             )                                                               	"); 
 		qry.append("      VALUES ( ?, ?, ?, ?, ?, ?,            						         	"); 
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
@@ -647,6 +751,7 @@ public class ServiceQuery {
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	"); 
 		qry.append("              ?, ?, to_char(sysdate, 'YYYYMMDDHH24MISS'), ?, ?, '"+transcd+"',	");
+		qry.append("              ?, ?, ?, ?, ?, ?,                                              	");
 		qry.append("              ?, ?, ?, ?, ?, ?,                                              	");
 		qry.append("              ?, ?, ?, ?, ?, ?				                                    ");
 		qry.append("             )                                                               	"); 
@@ -893,11 +998,3 @@ public class ServiceQuery {
 			return qry.toString();
 		}	
 }
-
-
-
-
-
-
-
-

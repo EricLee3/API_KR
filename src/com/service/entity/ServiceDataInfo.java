@@ -80,6 +80,12 @@ public class ServiceDataInfo{
     String nodeType				= null;	   //
     String strVendor_Pono		= null;	   //벤더번호 추가 [IOS 26-Jan-16] 
     String strRet_memo		    = null;	   //교환/반품 사유 추가 KBJ 20161226 
+    String strOverSea_Gubun		= null;	   //해외구분 코드 추가 KBJ 20170223 
+    String strCountry			= null;	   //국가코드 추가 KBJ 20170223 
+    String strState				= null;	   //주 코드 추가 KBJ 20170223 
+    String strCity				= null;	   //도시 코드 추가 KBJ 20170223 
+    String strThCd				= null;	   //통화 코드 추가 KBJ 20170223 
+    String strNetPri			= null;	   //외화단가 추가 KBJ 20170223 
 		
     
     public String getVendor_Pono()  {
@@ -459,4 +465,53 @@ public class ServiceDataInfo{
 	public void setRet_memo(String strRet_memo) {
 		this.strRet_memo = strRet_memo;
 	}
+	
+	// 해외구분 코드 추가 KBJ 20170223
+	public String getOverSea_Gubun() {
+		return strOverSea_Gubun;
+	}
+	public void setOverSea_Gubun(String strOverSea_Gubun) {
+		this.strOverSea_Gubun = strOverSea_Gubun;
+	}
+
+	// 국가 코드 추가 KBJ 20170223
+	public String getCountry() {
+		return strCountry;
+	}
+	public void setCountry(String strCountry) {
+		this.strCountry = strCountry;
+	}
+
+	// 주 코드 추가 KBJ 20170223
+	public String getState() {
+		return strState;
+	}
+	public void setState(String strState) {
+		this.strState = strState;
+	}
+
+	// 도시 코드 추가 KBJ 20170223
+	public String getCity() {
+		return strCity;
+	}
+	public void setCity(String strCity) {
+		this.strCity = strCity;
+	}
+
+	// 통화 코드 추가 KBJ 20170223
+	public String getThCd() {
+		return strThCd;
+	}
+	public void setThCd(String strThCd) {
+		this.strThCd = strThCd;
+	}
+
+	// 외화단가 추가 KBJ 20170223
+	public String getNetPri() {
+		return strNetPri;
+	}
+	public void setNetPri(String strNetPri) {
+		this.strNetPri = strNetPri;
+	}
+	
 }
